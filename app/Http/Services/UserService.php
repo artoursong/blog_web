@@ -35,4 +35,8 @@ class UserService
         Auth::logout();
         return redirect()->route('home');
     }
+
+    public function index() {
+        
+    }
 }

@@ -36,6 +36,15 @@
 
       <div class="d-flex align-items-center">
         @if(Auth::check())
+          @if(!is_null(Auth::user()->image_url))
+            <a class="px-3 me-2" href="">
+              <img src="{{Auth::user()->image_url}}" alt="">
+            </a>
+          @else
+            <a class="px-3 me-2" href="">
+              <span>{{Auth::user()->username}}</span>
+            </a>
+          @endif
           <a type="button" href="<?php echo route('log_out')?>" class="btn btn-primary me-3">
             Log out
           </a>
