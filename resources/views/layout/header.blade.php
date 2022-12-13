@@ -35,12 +35,18 @@
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <a type="button" href="<?php echo route('get.login')?>" class="btn btn-link px-3 me-2 login-button">
-          Login
-        </a>
-        <a type="button" href="<?php echo route('get.sign_up')?>" class="btn btn-primary me-3">
-          Sign up for free
-        </a>
+        @if(Auth::check())
+          <a type="button" href="<?php echo route('log_out')?>" class="btn btn-primary me-3">
+            Log out
+          </a>
+        @else
+          <a type="button" href="<?php echo route('get.login')?>" class="btn btn-link px-3 me-2 login-button">
+            Login
+          </a>
+          <a type="button" href="<?php echo route('get.sign_up')?>" class="btn btn-primary me-3">
+            Sign up for free
+          </a>
+        @endif
       </div>
     </div>
     <!-- Collapsible wrapper -->

@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -15,10 +17,22 @@ class UserService
                 'name'=> $data['name'],
                 'username'=> $data['username'],
                 'email'=> $data['email'],
-                'password'=> $data['password'], 
+                'password'=> Hash::make($data['password']), 
             ]);
             $user->save();
             return redirect()->route('get.login')->with('success', 'Sign up success pls login');
         }
+    }
+
+    public function login(Request $request) {
+        $data = $request->only('email', 'password');
+        if(Auth::attempt($data)) {
+            return redirect()->route('home');
+        }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('home');
     }
 }
