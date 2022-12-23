@@ -36,7 +36,15 @@ class UserService
         return redirect()->route('home');
     }
 
-    public function index() {
-        
+    public function index($id) {
+        $user = User::where('id', $id)->first();
+        return view('user.index', compact('user'));
+    }
+
+    public function update($id, Request $request) {
+        $data = $request->input();
+        User::where('id', $id)->update(['email' => $data['email'], 'username' => $data['username']]);
+        $user = User::where('id', $id)->first();
+        return view('user.index', compact('user'));
     }
 }

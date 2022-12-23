@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('home/home');
 })->name('home');
 
+Route::get('/user/{id}', [UserController::class, 'index'])->name('get_info_user');
+
 Route::get('/login',function() {
     return view('login/login');
 })->name('get.login');
@@ -31,5 +33,7 @@ Route::post('/signup', [UserController::class, 'sign_up'])->name('sign_up');
 Route::post('/login', [UserController::class, 'login'])->name('log_in');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
+
+Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_user');
 
 // Route::post('/login', [UserController::class, ])
