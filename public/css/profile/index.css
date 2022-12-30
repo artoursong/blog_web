@@ -1,0 +1,59 @@
+.container {
+    max-width: 1140px !important;
+}
+
+.profile-header {
+    padding: 24px 24px;
+    background-color: #969696;
+}
+
+.profile-header .avatar-container>img {
+    width: 64px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 24px
+}
+
+.profile_header_name>a {
+    font-size: 26px;
+    color: #fff !important;
+}
+/*PROFILE_HEADER END*/
+
+/* PROFILE-CONTENT*/
+
+.profile-content {
+    display: flex;
+    margin-top: 56px;
+    gap: 36px
+}
+
+.profile-content .profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 20%;
+}
+
+.profile-content .profile-field>a{
+    padding: 8px 32px;
+    color: #000;
+    border-radius: 8px;
+}
+
+.profile-content .profile-field a.active {
+    background-color: #3d4450;
+    color: #fff;
+}
+
+.profile-content .profile-field a:hover {
+    background-color: #3d4450;
+    color: #fff;
+}
+
+.profile-content .field-information {
+    width: 80%;
+}

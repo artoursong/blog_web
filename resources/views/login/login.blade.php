@@ -43,10 +43,16 @@
                   <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                 </form>
               </div>
-
+              @if (\Session::has('message'))
+                <div class="alert alert-success">
+                  <ul style="list-style: none;">
+                    <li>{!! Session::get('message') !!}</li>
+                  </ul>
+                </div>
+              @endif
               <div>
                 <p class="mb-0">Don't have an account? <a href="{{route('get.sign_up')}}"
-                    class="text-white-50 fw-bold">Sign Up</a>
+                  class="text-white-50 fw-bold">Sign Up</a>
                 </p>
               </div>
             </div>

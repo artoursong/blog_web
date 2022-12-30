@@ -33,4 +33,14 @@ class UserController extends Controller
         $user_service = new UserService();
         return $user_service->update($id, $request);
     }
+
+    public function indexInfo($id) {
+        $user_service = new UserService();
+        return $user_service->indexInfo($id);
+    }
+
+    public function indexAvatar($id) {
+        $user_service = new UserService();
+        return $user_service->indexAvatar($id);
+    }
 }

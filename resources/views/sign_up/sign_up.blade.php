@@ -25,7 +25,7 @@
             <div class="mb-md-5 mt-md-4 pb-5">
               <h2 class="fw-bold mb-2 text-uppercase">Sign up</h2>
               <p class="text-white-50 mb-5">Please enter your information!</p>
-              <form  method="post" action="{{route('sign_up')}}">
+              <form  method="post" action="{{route('sign_up')}}" enctype="multipart/form-data">
               @csrf
               <div class="form-outline form-white mb-4">
                 <input type="text" id="typeEmailX" name="name" class="form-control form-control-lg"/>
@@ -50,6 +50,11 @@
               <div class="form-outline form-white mb-4">
                 <input type="password" id="typePasswordX" name="comfirm_password" class="form-control form-control-lg"/>
                 <label class="form-label" for="typePasswordX" name="comfirm_password">Comfirm Password</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label for="photo">Attach a photograph</label>
+                <input type="file" name="photo" id="photo" accept="image/*" class="form-control-file">
               </div>
               <button class="btn btn-outline-light btn-lg px-5" type="submit">SIGN UP</button>
               </form>

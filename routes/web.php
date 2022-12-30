@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Authenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,11 @@ Route::get('/', function () {
     return view('home/home');
 })->name('home');
 
-Route::get('/user/{id}', [UserController::class, 'index'])->name('get_info_user');
+Route::get('/user/{id}', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
+
+Route::get('/user/information/{id}', [UserController::class, 'indexInfo'])->name('get_information_user')->middleware(Authenticate::class);
+
+Route::get('/user/avatar/{id}', [UserController::class, 'indexAvatar'])->name('get_avatar_user')->middleware(Authenticate::class);
 
 Route::get('/login',function() {
     return view('login/login');

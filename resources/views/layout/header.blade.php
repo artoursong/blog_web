@@ -38,7 +38,7 @@
         @if(Auth::check())
           @if(!is_null(Auth::user()->image_url))
             <a class="px-3 me-2" href="{{ URL::route('get_info_user', Auth::user()->id) }}">
-              <img src="{{Auth::user()->image_url}}" alt="">
+              <img style="width: 30px; height: 30px; border-radius: 9999px" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
             </a>
           @else
             <a class="px-3 me-2" href="{{ URL::route('get_info_user', Auth::user()->id) }}">

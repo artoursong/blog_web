@@ -1,0 +1,59 @@
+.avatar-page {
+    width: 100%;
+}
+
+.avatar-page-header {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #969696;
+}
+
+.avatar-page-header>span {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.avatar-page-content {
+    display: flex;
+}
+
+.avatar-page-content .content-right {
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px
+}
+
+.avatar-border {
+    border: 1px solid #969696;
+}
+
+.avatar-page-content .content-right .avatar-container>img {
+    width: 224px;
+}
+
+.avatar-page-content .content-right .avatar-container-medium>img {
+    width: 78px;
+}
+
+.avatar-page-content .content-right .avatar-container-small>img {
+    width: 38px;
+}
+
+.avatar-page-content .content-left {
+    width: 30%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.avatar-page-content .content-left .avatar-change>label {
+    color: #969696;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 16px;
+}
+
+.avatar-page-content .content-left .avatar-change>input {
+    color: #969696;
+    font-size: 16px;
+    font-weight: 300;
+}
