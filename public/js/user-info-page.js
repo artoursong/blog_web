@@ -1,6 +1,8 @@
 
 var Info = {
-    GLOBAL: {},
+    GLOBAL: {
+        indexCurrent: 1,
+    },
 
     CONSTS: {},
 
@@ -9,7 +11,9 @@ var Info = {
         changeInfoButton: ".information-page .info-footer>button",
         name: "input[name=name]",
         username: "input[name=username]",
-        email: "input[name=email]"
+        email: "input[name=email]",
+        fieldInfo: ".field-information",
+        profileField: ".profile-field a",
     },
 
     init: function () {
@@ -37,7 +41,30 @@ var Info = {
                 }
             })
         })
-    }
+    },
+
+    renderPage: function() {
+        var id = window.userID;
+        
+        if (Info.GLOBAL.indexCurrent == 1) {
+            $.ajax({
+                type: 'GET',
+                url: '/user/information/' + id.toString(),
+                success: function (response) {
+                    $(Info.SELECTORS.fieldInfo).html(response)
+                }
+            })
+        }
+        if (Info.GLOBAL.indexCurrent == 2) {
+            $.ajax({
+                type: 'GET',
+                url: '/user/avatar/' + id.toString(),
+                success: function (response) {
+                    $(Info.SELECTORS.fieldInfo).html(response)
+                }
+            })
+        }
+    },
 };
 
 $(document).ready(function () {
