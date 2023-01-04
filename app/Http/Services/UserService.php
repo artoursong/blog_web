@@ -53,23 +53,32 @@ class UserService
         return $view;
     }
 
-    public function indexInfo($id) {
+    public function showProfile($id) {
         $user = User::where('id', $id)->first();
-        $view = View::make('user.information')->with('user', $user);
+        $view = View::make('user.my_profile')->with('user', $user);
         return $view;
     }
 
-    public function indexAvatar($id) {
+    public function showEditProfile($id) {
         $user = User::where('id', $id)->first();
-        $view = View::make('user.avatar')->with('user_avatar', $user->image_url);
+        $view = View::make('user.edit_profile')->with('user', $user);
         return $view;
     }
 
     public function update($id, Request $request) {
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);  
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
         $data = $request->input();
-        User::where('id', $id)->update(['email' => $data['email'], 'username' => $data['username'], 'name' => $data['name']]);
+        if(!is_null($data['email'])) User::where('id', $id)->update(['email' => $data['email']]);
+        if(!is_null($data['username'])) User::where('id', $id)->update(['username' => $data['username']]);
+        if(!is_null($data['name'])) User::where('id', $id)->update(['name' => $data['name']]);
+        if(!is_null($imageName)) User::where('id', $id)->update(['image_url' => $imageName]);
         $user = User::where('id', $id)->first();
-        $view = view('user.information', $user);
+        $view = view('user.my_profile')->with('user', $user);;
         return $view;
     }
 }

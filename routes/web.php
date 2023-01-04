@@ -21,9 +21,11 @@ Route::get('/', function () {
 
 Route::get('/user/{id}', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
 
-Route::get('/user/information/{id}', [UserController::class, 'indexInfo'])->name('get_information_user')->middleware(Authenticate::class);
+Route::get('user/profile/{id}', [UserController::class, 'showProfile'])->name('profile_user')->middleware(Authenticate::class);
 
-Route::get('/user/avatar/{id}', [UserController::class, 'indexAvatar'])->name('get_avatar_user')->middleware(Authenticate::class);
+Route::get('/user/edit_profile/{id}', [UserController::class, 'showEditProfile'])->name('get_edit_profile')->middleware(Authenticate::class);
+
+Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_user');
 
 Route::get('/login',function() {
     return view('login/login');
@@ -39,6 +41,6 @@ Route::post('/login', [UserController::class, 'login'])->name('log_in');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
 
-Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_user');
+
 
 // Route::post('/login', [UserController::class, ])

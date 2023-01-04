@@ -2,3 +2,14 @@
     position: fixed;
     top: 0
 }
+
+.btn-header {
+    color: green !important;
+    background-color: white !important;
+    border: 2px green !important;
+}
+
+.btn-header:hover {
+    color: white !important;
+    background-color: green !important;
+}

@@ -11,22 +11,49 @@
 <body>
   @include('layout.header')
   <section class="container">
-    <div class="profile-header">
-      <div class="avatar-container">
-        <img src="" alt="">
+    <div class="row py-4">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <div>
+            <img class="user-image" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <h1 class="greeting-title">Welcome</h1>
+          <p class="greeting-sub-title">Manage your profile information and security with Blog Account</p>
+        </div>
       </div>
-      <span class="profile_header_name">
-        <a>Dendaman</a>
-      </span>
     </div>
-    <div class="profile-content">
-      <div class="profile-field">
-        <a index="1" href="">Information</a>
-        <a index="2" href="">Avatar</a>
-        <a index="3" href="">Blogs</a>
-        <a index="4" href="">Change Password</a>
+    <div class="row py-4">
+      <div class="mb-2 col-sm-6 col-md-4">
+        <a class="menu-item" href="{{ URL::route('profile_user', Auth::user()->id) }}">
+          <div class="el-card card-item text-center is-hover-shadow">
+            <div class="el-card__body">
+              <img src="{{asset('images/user.svg')}}" alt="">
+              <h2 class="card-title mt-4">My Profile</h2>
+            </div>
+          </div>
+        </a>
       </div>
-      <div class="field-information">
+      <div class="mb-2 col-sm-6 col-md-4">
+        <a class="menu-item" href="">
+          <div class="el-card card-item text-center is-hover-shadow">
+            <div class="el-card__body">
+              <img src="{{asset('images/password.svg')}}" alt="">
+              <h2 class="card-title mt-4">Change Password</h2>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="mb-2 col-sm-6 col-md-4">
+        <a class="menu-item" href="">
+          <div class="el-card card-item text-center is-hover-shadow">
+            <div class="el-card__body">
+              <img src="{{asset('images/my_blog.png')}}" alt="">
+              <h2 class="card-title mt-4">My Blogs</h2>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </section>

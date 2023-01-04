@@ -2,69 +2,45 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link href="{{ asset('bootstrap-5.2.3-dist/css/bootstrap.min.css') }}" rel="stylesheet"> -->
-  <link href="{{ asset('css/login/index.css') }}" rel="stylesheet">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css" rel="stylesheet" />
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ asset('bootstrap-5.2.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/login/index.css') }}" rel="stylesheet">
+    <title>Document</title>
 </head>
 
 <body>
-  <section class="vh-100 gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card bg-dark text-white" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <div class="mb-md-5 mt-md-4 pb-5">
-                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-white-50 mb-5">Please enter your login and password!</p>
-                <form method="post" action="{{route('log_in')}}">
-                    @csrf
-                  <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" name="email" class="form-control form-control-lg" />
-                    <label class="form-label" for="typeEmailX">Email</label>
-                  </div>
+    @include('layout.header')
+    <main id="main" class="site-main main">
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="container container--mini"><img class="img-fluid mx-auto d-block mb-5" src="https://themes.getbootstrap.com/wp-content/themes/bootstrap-marketplace/assets/images/elements/bootstrap-logo.svg" alt="">
+                        <form action="{{route('log_in')}}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="user_login">Email</label>
+                                <input type="text" name="email" id="user_login" class="form-control" value="" size="20">
+                            </div>
 
-                  <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" name="password" class="form-control form-control-lg" />
-                    <label class="form-label" for="typePasswordX">Password</label>
-                  </div>
+                            <div class="form-group">
+                                <label for="user_pass">Password</label>
 
-                  <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+                                <a class="form-sublink" href="https://themes.getbootstrap.com/my-account/lost-password/">Forgot password?</a>
+                                <input type="password" name="password" id="user_pass" class="form-control" value="" size="20">
+                            </div>
 
-                  <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-                </form>
-              </div>
-              @if (\Session::has('message'))
-                <div class="alert alert-success">
-                  <ul style="list-style: none;">
-                    <li>{!! Session::get('message') !!}</li>
-                  </ul>
+                            <div class="form-group mt-5">
+                                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-brand btn-block mb-4 bg-primary text-white" value="Sign In">
+                            </div>
+                        </form>
+                        <p class="small text-center text-gray-soft">Don't have an account yet? <a href="https://themes.getbootstrap.com/my-account/">Sign up</a></p>
+                    </div>
                 </div>
-              @endif
-              <div>
-                <p class="mb-0">Don't have an account? <a href="{{route('get.sign_up')}}"
-                  class="text-white-50 fw-bold">Sign Up</a>
-                </p>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- MDB -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
+        </section>
+    </main>
 </body>
 
 </html>
