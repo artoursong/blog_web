@@ -81,4 +81,23 @@ class UserService
         $view = view('user.my_profile')->with('user', $user);;
         return $view;
     }
+
+    public function updatePass($id, Request $request) {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = User::where('id', $id)->first();
+
+        if(!Hash::check($request->old_password, $user->password)) {
+            return back()->with("error", "old password doesnt match!");
+        }
+
+        User::where('id', auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password change successfully!");
+    }
 }

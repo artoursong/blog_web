@@ -36,7 +36,7 @@
         </a>
       </div>
       <div class="mb-2 col-sm-6 col-md-4">
-        <a class="menu-item" href="">
+        <a class="menu-item" href="{{ URL::route('get_update_pass', Auth::user()->id) }}">
           <div class="el-card card-item text-center is-hover-shadow">
             <div class="el-card__body">
               <img src="{{asset('images/password.svg')}}" alt="">
@@ -61,6 +61,5 @@
     <script>
       window.userID = {{ auth()->id() }};
     </script>
-    <script type="text/javascript" src="{{asset('js/user-page.js')}}"></script>
 </body>
 </html>

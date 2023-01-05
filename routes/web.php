@@ -27,6 +27,10 @@ Route::get('/user/edit_profile/{id}', [UserController::class, 'showEditProfile']
 
 Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_user');
 
+Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->middleware(Authenticate::class)->name('update_pass');
+
+Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(Authenticate::class)->name('get_update_pass');
+
 Route::get('/login',function() {
     return view('login/login');
 })->name('get.login');

@@ -1,0 +1,4 @@
+html, body, section {
+    min-height: 100% !important;
+    background-color: #eee !important;
+}
