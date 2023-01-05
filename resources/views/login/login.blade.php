@@ -19,6 +19,15 @@
                     <div class="container container--mini"><img class="img-fluid mx-auto d-block mb-5" src="https://themes.getbootstrap.com/wp-content/themes/bootstrap-marketplace/assets/images/elements/bootstrap-logo.svg" alt="">
                         <form action="{{route('log_in')}}" method="post">
                             @csrf
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @elseif (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                             <div class="form-group">
                                 <label for="user_login">Email</label>
                                 <input type="text" name="email" id="user_login" class="form-control" value="" size="20">

@@ -53,4 +53,5 @@ class UserController extends Controller
         $view = View::make('user.change_pass');
         return $view;
     }
+
 }

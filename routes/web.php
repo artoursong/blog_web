@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BlogController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -46,5 +47,8 @@ Route::post('/login', [UserController::class, 'login'])->name('log_in');
 Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
 
 
+/*Blog Route*/
+
+Route::get('/blog/create', [BlogController::class, 'getCreateForm'])->middleware(Authenticate::class)->name('getCreateForm');
 
 // Route::post('/login', [UserController::class, ])

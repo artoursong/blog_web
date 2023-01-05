@@ -12,25 +12,19 @@ class UserService
 {
 
     public function register(Request $request) {
-        $request->validate([
-            'photo' => 'required|image|mimes:png,jpg,jpeg|max:2048'
-        ]);  
-        $imageName = time().'.'.$request->photo->extension();
-        $request->photo->move(public_path('images'), $imageName);
-
         $data = $request->input();
         $user_check = User::where('username', $data['username'])->first();
-        if ($data['password'] ==  $data['comfirm_password'] && !$user_check) {
+        if (!$user_check) {
             $user = new User([
                 'name'=> $data['name'],
                 'username'=> $data['username'],
                 'email'=> $data['email'],
                 'password'=> Hash::make($data['password']),
-                'image_url' => $imageName,
             ]);
             $user->save();
             return redirect()->route('get.login')->with('success', 'Sign up success pls login');
         }
+        else return back()->with('status', 'username is already exists');
     }
 
     public function login(Request $request) {
@@ -38,9 +32,8 @@ class UserService
         if(Auth::attempt($data)) {
             return redirect()->route('home');
         }
-        else {
-            return redirect()->back()->with('message', 'password or email not valid');
-        }
+        return back()->with('error', 'password or email not valid');
+
     }
 
     public function logout() {

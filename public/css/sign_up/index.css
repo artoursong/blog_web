@@ -1,0 +1,94 @@
+@media (min-width: 768px) {
+    .container--xs {
+        max-width: 570px !important;
+    }
+}
+@media (min-width: 1200px) {
+    .container--xs {
+        max-width: 1140px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .container--xs {
+        max-width: 960px !important;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .container--xs{
+        max-width: 720px !important;
+    }
+}
+
+@media (min-width: 576px) {
+    .container--xs {
+        max-width: 540px !important;
+    }
+}
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.woocommerce {
+    width: 100%;
+    padding: 0 15px;
+}
+
+#signup_div_wrapper {
+    padding-top: 65px;
+}
+
+.register {
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    border-radius: 5px;
+}
+.form-row {
+    padding: 0;
+    margin-bottom: 1.5rem
+}
+
+.form-row-first {
+    float: left;
+    width: 47%;
+}
+
+.form-row-last {
+    float: right;
+    width: 47%;
+}
+
+.form-row-wide {
+    clear: both;
+}
+
+label {
+    font-size: 14px;
+    color: #2D2D2D;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.form-row label {
+    line-height: 2;
+}
+
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    outline: 0;
+    line-height: normal;
+}
+
+.register input {
+    padding: 7.5px 11.25px;
+}
