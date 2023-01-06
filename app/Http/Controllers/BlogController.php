@@ -16,7 +16,17 @@ class BlogController extends Controller
     // }
 
     public function getCreateForm() {
-        $view = View::make('blog.create_blog');
-        return $view;
+        $blogservice = new BlogService();
+        return $blogservice->getCreateForm();
+    }
+
+    public function createBlog($id, Request $request) {
+        $blogservice = new BlogService();
+        return $blogservice->createBlog($id, $request);
+    }
+
+    public function getBlog($id) {
+        $blogservice = new BlogService();
+        return $blogservice->getBlog($id);
     }
 }

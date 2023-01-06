@@ -12,31 +12,28 @@
     <section>
         <div class="container py-5">
             <div class="col-lg-8 content-container">
-                <form action="" method="post" enctype="multipart/form-data" class="update-form">
+                <form action="{{route('createBlog', Auth::user()->id)}}" method="post" enctype="multipart/form-data" class="update-form">
                     @csrf
                     <div class="info-content">
                         <div class="input-label-group">
                             <label for="">Blog Name</label>
-                            <input type="text">
+                            <input name="title" type="text">
                         </div>
                         
                         <fieldset>
                             <legend>Choose your blog's categories</legend>
-
-                            <div>
-                                <input type="checkbox" id="scales" name="scales" checked>
-                                <label for="scales">News</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="horns" name="horns">
-                                <label for="horns">Books</label>
-                            </div>
+                            
+                            @foreach($categories as $value)
+                                <div>
+                                    <input type="checkbox" name="categories[]" value="{{$value->id}}">
+                                    <label for="scales">{{$value->name}}</label>
+                                </div>
+                            @endforeach
                         </fieldset>
 
                         <div class="form-group col-md-12 mt-3">
                             <label class="mb-2">Content</label>
-                            <textarea name="txtContent" class="form-control " id="editor1"></textarea>
+                            <textarea name="content" class="form-control " id="editor1"></textarea>
                         </div> 
                     </div>
                     <div class="info-footer">
@@ -49,7 +46,17 @@
     </section>
 
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script> CKEDITOR.replace('editor1'); </script>
+    <script>
+    CKEDITOR.replace( 'content', {
+        filebrowserBrowseUrl     : "{{ route('ckfinder_browser') }}",
+        filebrowserImageBrowseUrl: "{{ route('ckfinder_browser') }}?type=Images&token=123",
+        filebrowserFlashBrowseUrl: "{{ route('ckfinder_browser') }}?type=Flash&token=123", 
+        filebrowserUploadUrl     : "{{ route('ckfinder_connector') }}?command=QuickUpload&type=Files", 
+        filebrowserImageUploadUrl: "{{ route('ckfinder_connector') }}?command=QuickUpload&type=Images",
+        filebrowserFlashUploadUrl: "{{ route('ckfinder_connector') }}?command=QuickUpload&type=Flash",
+    } );
+    </script>
+    @include('ckfinder::setup')
 </body>
 
 

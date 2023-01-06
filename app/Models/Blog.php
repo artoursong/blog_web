@@ -14,6 +14,7 @@ class Blog extends Model
         'image_url',
         'is_delete',
         'like_sum',
+        'user_id'
     ];
 
     protected $guarded=[

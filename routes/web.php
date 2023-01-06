@@ -51,4 +51,22 @@ Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
 
 Route::get('/blog/create', [BlogController::class, 'getCreateForm'])->middleware(Authenticate::class)->name('getCreateForm');
 
-// Route::post('/login', [UserController::class, ])
+Route::post('blog/create/{id}', [BlogController::class, 'createBlog'])->middleware(Authenticate::class)->name('createBlog');
+
+Route::get('/blog/{id}', [BlogController::class, 'getBlog'])->name('getBlog');
+
+/*Blog Route End*/
+
+/*CKFinder Route*/
+
+## /routes/web.php
+Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+    ->name('ckfinder_connector');
+
+Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+    ->name('ckfinder_browser');
+
+//Route::any('/ckfinder/examples/{example?}', '\CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
+//    ->name('ckfinder_examples');
+
+/*END CKFinder Route*/

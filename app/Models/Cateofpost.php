@@ -5,9 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CateOfBlog extends Model
+class Cateofpost extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    protected $fillable=[
+        'blog_id',
+        'cate_id'
+    ];
 
     public function blog()
     {
