@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CKEditorController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -60,11 +61,15 @@ Route::get('/blog/{id}', [BlogController::class, 'getBlog'])->name('getBlog');
 /*CKFinder Route*/
 
 ## /routes/web.php
-Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
-    ->name('ckfinder_connector');
+// Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+//     ->name('ckfinder_connector');
 
-Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
-    ->name('ckfinder_browser');
+// Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+//     ->name('ckfinder_browser');
+
+	
+Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->name('upload');
+
 
 //Route::any('/ckfinder/examples/{example?}', '\CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
 //    ->name('ckfinder_examples');
