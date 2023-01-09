@@ -24,9 +24,9 @@ class UserController extends Controller
         return $user_service->logout($request);
     }
 
-    public function index($id) {
+    public function index() {
         $user_service = new UserService();
-        return $user_service->index($id);
+        return $user_service->index();
     }
 
     public function update($id, Request $request) {
@@ -52,6 +52,11 @@ class UserController extends Controller
     public function getPassPage($id) {
         $view = View::make('user.change_pass');
         return $view;
+    }
+
+    public function showProfileWithSlug($slug) {
+        $user_service = new UserService();
+        return $user_service->showProfileWithSlug($slug);
     }
 
 }

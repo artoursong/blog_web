@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-class BlogService
+class BlogService extends ConvertSlug
 {
     public function getCreateForm() {
         $categories = Category::all();
@@ -26,11 +26,15 @@ class BlogService
             'categories' => 'required'
         ]);
         
+        
+
         $blog = new Blog([
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => $id
         ]);
+
+        date_default_timezone_get("Asia/Ho_Chi_Minh");
 
         $blog->save();
 

@@ -38,7 +38,7 @@
 
         <div class="text-end">
           @if(Auth::check())
-          <a class="px-3 me-2" href="{{ URL::route('get_info_user', Auth::user()->id) }}">
+          <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
             <img style="width: 30px; height: 30px; border-radius: 9999px" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
           </a>
           <a type="button" href="<?php echo route('log_out')?>" class="btn btn-outline-light me-2 btn-header">Log out</a>

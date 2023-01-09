@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('home/home');
 })->name('home');
 
-Route::get('/user/{id}', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
+Route::get('/user', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
 
 Route::get('user/profile/{id}', [UserController::class, 'showProfile'])->name('profile_user')->middleware(Authenticate::class);
 
@@ -46,6 +46,7 @@ Route::post('/signup', [UserController::class, 'sign_up'])->name('sign_up');
 Route::post('/login', [UserController::class, 'login'])->name('log_in');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
+
 
 
 /*Blog Route*/

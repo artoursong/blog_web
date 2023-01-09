@@ -15,7 +15,7 @@
       <div class="col-12">
         <div class="d-flex justify-content-center">
           <div>
-            <img class="user-image" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+            <img class="user-image" src="{{asset('images/'. Auth::user()->id)}}" alt="">
           </div>
         </div>
         <div class="text-center mt-4">

@@ -41,7 +41,7 @@ class UserService
         return redirect()->route('home');
     }
 
-    public function index($id) {
+    public function index() {
         $view = View::make('user.index');
         return $view;
     }
@@ -93,4 +93,5 @@ class UserService
 
         return back()->with("status", "Password change successfully!");
     }
+
 }
