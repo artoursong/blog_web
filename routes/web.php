@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckCurrentUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,21 +18,20 @@ use App\Http\Middleware\Authenticate;
 |
 */
 
-Route::get('/', function () {
-    return view('home/home');
-})->name('home');
+Route::get('/', [BlogController::class, 'getNewBlogs'])->name('get_new_blogs');
+
 
 Route::get('/user', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
 
-Route::get('user/profile/{id}', [UserController::class, 'showProfile'])->name('profile_user')->middleware(Authenticate::class);
+Route::get('user/profile/{id}', [UserController::class, 'showProfile'])->name('profile_user')->middleware(CheckCurrentUser::class);
 
-Route::get('/user/edit_profile/{id}', [UserController::class, 'showEditProfile'])->name('get_edit_profile')->middleware(Authenticate::class);
+Route::get('/user/edit_profile/{id}', [UserController::class, 'showEditProfile'])->name('get_edit_profile')->middleware(CheckCurrentUser::class);
 
 Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_user');
 
-Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->middleware(Authenticate::class)->name('update_pass');
+Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->middleware(CheckCurrentUser::class)->name('update_pass');
 
-Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(Authenticate::class)->name('get_update_pass');
+Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(CheckCurrentUser::class)->name('get_update_pass');
 
 Route::get('/login',function() {
     return view('login/login');
@@ -55,7 +55,7 @@ Route::get('/blog/create', [BlogController::class, 'getCreateForm'])->middleware
 
 Route::post('blog/create/{id}', [BlogController::class, 'createBlog'])->middleware(Authenticate::class)->name('createBlog');
 
-Route::get('/blog/{id}', [BlogController::class, 'getBlog'])->name('getBlog');
+Route::get('/blog/{slug}', [BlogController::class, 'getBlog'])->name('getBlog');
 
 /*Blog Route End*/
 

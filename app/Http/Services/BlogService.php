@@ -23,18 +23,26 @@ class BlogService extends ConvertSlug
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'categories' => 'required'
+            'categories' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
         ]);
-        
-        
 
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $slug = $request->title ." " .date("h:i:s", time()) ." " .strval(rand(0, 10000));
+        $slug = $this->convert_name($slug);
+        
         $blog = new Blog([
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => $id
+            'user_id' => $id,
+            'slug' => $slug,
+            'image_url' => $imageName
         ]);
 
-        date_default_timezone_get("Asia/Ho_Chi_Minh");
+        
 
         $blog->save();
 
@@ -53,9 +61,15 @@ class BlogService extends ConvertSlug
 
     }
 
-    public function getBlog($id) {
-        $blog = Blog::where('id', $id)->first();
+    public function getBlog($slug) {
+        $blog = Blog::where('slug', $slug)->first();
         $view = view('blog.blog')->with('blog', $blog);
+        return $view;
+    }
+
+    public function getNewBlogs() {
+        $blogs = Blog::orderBy('id', 'desc')->select('title', 'image_url', 'slug')->take(2)->get();
+        $view = view('home.home')->with('blogs', $blogs);
         return $view;
     }
 }

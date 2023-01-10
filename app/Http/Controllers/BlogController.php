@@ -25,8 +25,13 @@ class BlogController extends Controller
         return $blogservice->createBlog($id, $request);
     }
 
-    public function getBlog($id) {
+    public function getBlog($slug) {
         $blogservice = new BlogService();
-        return $blogservice->getBlog($id);
+        return $blogservice->getBlog($slug);
+    }
+
+    public function getNewBlogs() {
+        $blogservice = new BlogService();
+        return $blogservice->getNewBlogs();
     }
 }

@@ -19,6 +19,11 @@
                             <label for="">Blog Name</label>
                             <input name="title" type="text">
                         </div>
+
+                        <div class="form-outline form-white mb-4 mt-4">
+                            <label for="photo">Blog Image</label>
+                            <input type="file" name="image" id="image" accept="image/*" class="form-control-file">
+                        </div>
                         
                         <fieldset>
                             <legend>Choose your blog's categories</legend>

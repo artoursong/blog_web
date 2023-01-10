@@ -54,9 +54,5 @@ class UserController extends Controller
         return $view;
     }
 
-    public function showProfileWithSlug($slug) {
-        $user_service = new UserService();
-        return $user_service->showProfileWithSlug($slug);
-    }
 
 }

@@ -15,7 +15,7 @@
       <div class="col-12">
         <div class="d-flex justify-content-center">
           <div>
-            <img class="user-image" src="{{asset('images/'. Auth::user()->id)}}" alt="">
+            <img class="user-image" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
           </div>
         </div>
         <div class="text-center mt-4">
@@ -59,7 +59,6 @@
   </section>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
-      window.userID = {{ auth()->id() }};
     </script>
 </body>
 </html>

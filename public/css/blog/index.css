@@ -1,0 +1,17 @@
+.content-container {
+    justify-content: left;
+    width: 50% !important;
+}
+
+.content-container image {
+    margin: 0 auto !important;
+}
+
+.content-header {
+    margin-top: 64px;
+    margin-bottom: 64px
+}
+
+.leftcolumn .card-hover {
+    cursor: pointer !important
+}

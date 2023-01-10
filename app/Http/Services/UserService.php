@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Services\BlogService;
 
 class UserService
 {
@@ -30,7 +31,8 @@ class UserService
     public function login(Request $request) {
         $data = $request->only('email', 'password');
         if(Auth::attempt($data)) {
-            return redirect()->route('home');
+            $blogservice = new BlogService();
+            return $blogservice->getNewBlogs();
         }
         return back()->with('error', 'password or email not valid');
 
