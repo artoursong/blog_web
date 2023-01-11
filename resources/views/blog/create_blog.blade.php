@@ -20,6 +20,11 @@
                             <input name="title" type="text">
                         </div>
 
+                        <div class="input-label-group">
+                            <label for="">Blog Subtitle</label>
+                            <textarea name="subtitle" type="text"></textarea>
+                        </div>
+
                         <div class="form-outline form-white mb-4 mt-4">
                             <label for="photo">Blog Image</label>
                             <input type="file" name="image" id="image" accept="image/*" class="form-control-file">

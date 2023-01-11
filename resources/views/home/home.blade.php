@@ -17,9 +17,11 @@
             @foreach ($blogs as $item)
                 <a href="{{ URL::route('getBlog', $item->slug) }}" class="card card-hover">
                     <h2>{{$item->title}}</h2>
-                    <h5>Title description, Dec 7, 2017</h5>
-                    <img src="{{asset('images/'. $item->image_url)}}" class="fakeimg" style="height:200px;">
-                    <p>Some text..</p>
+                    <p>{{$item->created_at}}</p>
+                    <div class="content">
+                        <img src="{{asset('images/'. $item->image_url)}}" class="fakeimg" style="height:200px;">
+                        {!! $item->subtitle !!}
+                    </div>
                 </a>
             @endforeach
         </div>

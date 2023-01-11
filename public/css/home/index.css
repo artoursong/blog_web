@@ -2,6 +2,10 @@
     box-sizing: border-box;
   }
   
+  a {
+    color: black !important;
+  }
+
   body {
     font-family: Arial;
     background: #f1f1f1;
@@ -12,47 +16,55 @@
  }
   /* Create two unequal columns that floats next to each other */
   /* Left column */
-  .leftcolumn {
-    float: left;
-    width: 75% !important;
-  }
-  
-  /* Right column */
-  .rightcolumn {
-    float: left;
-    width: 25% !important;
-    padding-left: 20px;
-  }
-  
-  /* Fake image */
-  .fakeimg {
-    background-color: #aaa;
-    width: 100%;
-    padding: 20px;
-  }
-  
-  /* Add a card effect for articles */
-  .card {
-    background-color: white;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  .leftcolumn .card-hover {
-    cursor: pointer !important
+.leftcolumn {
+  float: left;
+  width: 75% !important;
 }
   
-  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 800px) {
-    .leftcolumn, .rightcolumn {
-      width: 100%;
-      padding: 0;
-    }
+  /* Right column */
+.rightcolumn {
+  float: left;
+  width: 25% !important;
+  padding-left: 20px;
+}
+
+.card .content {
+display: flex;
+gap: 30px
+}
+
+.card .content>img {
+  width: 500px;
+  height: 300px !important;
+}
+
+.card .content>p {
+  width: 30%;
+  margin: unset;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.leftcolumn .card-hover {
+  cursor: pointer !important
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
   }
+}

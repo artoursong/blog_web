@@ -15,7 +15,8 @@ class Blog extends Model
         'is_delete',
         'like_sum',
         'user_id',
-        'slug'
+        'slug',
+        'subtitle'
     ];
 
     protected $guarded=[

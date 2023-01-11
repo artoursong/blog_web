@@ -11,7 +11,9 @@ class Comment extends Model
 
     protected $fillable = [
         'content',
-        'image'
+        'image',
+        'user_id',
+        'blog_id'
     ];
 
     protected $guarded = [

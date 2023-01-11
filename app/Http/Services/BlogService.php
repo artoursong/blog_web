@@ -39,7 +39,8 @@ class BlogService extends ConvertSlug
             'content' => $request->content,
             'user_id' => $id,
             'slug' => $slug,
-            'image_url' => $imageName
+            'image_url' => $imageName,
+            'subtitle'=> $request->subtitle,
         ]);
 
         
@@ -68,7 +69,11 @@ class BlogService extends ConvertSlug
     }
 
     public function getNewBlogs() {
-        $blogs = Blog::orderBy('id', 'desc')->select('title', 'image_url', 'slug')->take(2)->get();
+        $blogs = Blog::orderBy('id', 'desc')->select('id', 'title', 'subtitle', 'image_url', 'slug', 'created_at')->take(2)->get();
+        foreach($blogs as $item) {
+            $item->content = substr($item->content, 0, 50);
+        }
+        
         $view = view('home.home')->with('blogs', $blogs);
         return $view;
     }

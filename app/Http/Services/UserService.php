@@ -31,8 +31,7 @@ class UserService
     public function login(Request $request) {
         $data = $request->only('email', 'password');
         if(Auth::attempt($data)) {
-            $blogservice = new BlogService();
-            return $blogservice->getNewBlogs();
+            return redirect()->intended('home.home');
         }
         return back()->with('error', 'password or email not valid');
 
@@ -40,7 +39,7 @@ class UserService
 
     public function logout() {
         Auth::logout();
-        return redirect()->route('home');
+        return redirect()->route('get_new_blogs');
     }
 
     public function index() {

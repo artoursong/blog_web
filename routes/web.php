@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CKEditorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckCurrentUser;
 
@@ -34,6 +35,9 @@ Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->midd
 Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(CheckCurrentUser::class)->name('get_update_pass');
 
 Route::get('/login',function() {
+    if(!session()->has('url.intended')) {
+        session(['url.intended' => url()->previous()]);
+    }
     return view('login/login');
 })->name('get.login');
 
@@ -76,3 +80,7 @@ Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->nam
 //    ->name('ckfinder_examples');
 
 /*END CKFinder Route*/
+
+/*Comment route*/
+
+Route::post('comment/{id}', [CommentController::class, 'addComment'])->middleware(Authenticate::class)->name('addComment');
