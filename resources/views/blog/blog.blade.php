@@ -8,6 +8,9 @@
     <title>Document</title>
 </head>
 <body>
+
+    
+
     @include('layout.header')
 
     
@@ -34,9 +37,9 @@
 
                 <div class="comment-content">
                     <div class="comment">
-                        <img src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+                        <img src="" alt="">
                         <div>
-                            <div class="user-comment">{{Auth::user()->username}}</div>
+                            <div class="user-comment"></div>
                             <div class="comment-text">Lứa này của Việt Nam không cóng như lứa Huỳnh Đức, Hồng Sơn. Tất nhiên nhìn thực tế thì Tháilan 10, Vietnam mới 7. Dù sao cũng ủng hộ Vietnam vô địch để tri ân Thầy Park...</div>
                         </div>
                     </div>

@@ -30,6 +30,13 @@
 										{{ session('status') }}
 									</div>
                                 @endif
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" role="alert">
+										@foreach ($errors->all() as $error)
+                                            {{$error}}
+                                        @endforeach
+									</div>
+                                @endif
                                 <p class="woocommerce-FormRow woocommerce-FormRow--first form-row form-row-first">
                                     <label for="reg_sr_firstname">Username<span class="required text-danger">*</span></label>
                                     <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" required />

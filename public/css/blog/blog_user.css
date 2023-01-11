@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    margin: 50px 0px !important
+}
+
+table thead tr {
+    text-align: center;
+}
+
+table tbody tr {
+    align-items: center;
+}
+
+.action {
+    text-align: center;
+}
+
+.action a {
+    border: 1px solid black;
+    padding: 8px;
+    margin-left: 12px
+}
+
+.action a>i {
+    font-size: 18px;
+    text-align: center;
+}

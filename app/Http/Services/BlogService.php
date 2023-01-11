@@ -77,4 +77,10 @@ class BlogService extends ConvertSlug
         $view = view('home.home')->with('blogs', $blogs);
         return $view;
     }
+
+    public function getBlogsOfUser($id) {
+        $blogs = Blog::where('user_id', $id)->get(['title', 'subtitle', 'image_url', 'slug']);
+        $view = view('blog.blog_user')->with('blogs', $blogs);
+        return $view;
+    }
 }

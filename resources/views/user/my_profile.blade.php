@@ -15,7 +15,15 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="{{asset('images/'.$user->image_url)}}" style="width: 150px;">
+                            @if(is_null(Auth::user()->image_url) || !file_exists( public_path().'/images/'.Auth::user()->image_url ))
+                            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+                                <img style="width: 150px; height: 150px; border-radius:9999px" src="{{asset('images/user.svg')}}" alt="">
+                            </a>
+                            @else
+                            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+                                <img style="width: 150px; height: 150px; border-radius:9999px" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+                            </a>
+                            @endif
                             <h5 class="my-3">{{$user->username}}</h5>
                             <p class="text-muted mb-1">Full Stack Developer</p>
                             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>

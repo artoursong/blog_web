@@ -15,7 +15,15 @@
       <div class="col-12">
         <div class="d-flex justify-content-center">
           <div>
-            <img class="user-image" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+            @if(is_null(Auth::user()->image_url) || !file_exists( public_path().'/images/'.Auth::user()->image_url ))
+            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+              <img class="user-image" src="{{asset('images/user.svg')}}" alt="">
+            </a>
+            @else
+            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+              <img class="user-image" src="{{asset('images/'. Auth::user()->image_url)}}" alt="">
+            </a>
+            @endif
           </div>
         </div>
         <div class="text-center mt-4">

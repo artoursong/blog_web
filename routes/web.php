@@ -35,9 +35,7 @@ Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->midd
 Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(CheckCurrentUser::class)->name('get_update_pass');
 
 Route::get('/login',function() {
-    if(!session()->has('url.intended')) {
-        session(['url.intended' => url()->previous()]);
-    }
+    session(['url.intended' => url()->previous()]);
     return view('login/login');
 })->name('get.login');
 
@@ -60,6 +58,8 @@ Route::get('/blog/create', [BlogController::class, 'getCreateForm'])->middleware
 Route::post('blog/create/{id}', [BlogController::class, 'createBlog'])->middleware(Authenticate::class)->name('createBlog');
 
 Route::get('/blog/{slug}', [BlogController::class, 'getBlog'])->name('getBlog');
+
+Route::get('/blog/blogs_user/{id}', [BlogController::class, 'getBlogsOfUser'])->middleware(CheckCurrentUser::class)->name('blogsOfUser');
 
 /*Blog Route End*/
 

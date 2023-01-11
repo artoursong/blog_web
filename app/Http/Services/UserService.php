@@ -8,11 +8,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Services\BlogService;
+use Dotenv\Exception\ValidationException;
 
 class UserService
 {
 
     public function register(Request $request) {
+        
+        $request->validate([
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'name' => 'required'
+        ]);
+
         $data = $request->input();
         $user_check = User::where('username', $data['username'])->first();
         if (!$user_check) {
@@ -26,12 +35,18 @@ class UserService
             return redirect()->route('get.login')->with('success', 'Sign up success pls login');
         }
         else return back()->with('status', 'username is already exists');
+
+        // return back()->with('status', 'please fill all field');
     }
 
     public function login(Request $request) {
         $data = $request->only('email', 'password');
+        // dd(session('url.intended'));
         if(Auth::attempt($data)) {
-            return redirect()->intended('home.home');
+            if(session('url.intended') === url('/signup')) {
+                return redirect()->route('get_new_blogs');
+            }
+            return redirect()->intended();
         }
         return back()->with('error', 'password or email not valid');
 
