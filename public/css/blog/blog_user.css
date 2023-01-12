@@ -1,3 +1,25 @@
+.container {
+    position: relative;
+}
+
+.container>a {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid blue;
+    padding: 5px 42px;
+    background-color: white;
+    color: blue;
+}
+
+.container>a:hover {
+    background-color: blue;
+    color: white;
+    transition: 0.5s;
+}
+
 h1 {
     text-align: center;
     margin: 50px 0px !important
@@ -16,12 +38,17 @@ table tbody tr {
 }
 
 .action a {
-    border: 1px solid black;
     padding: 8px;
-    margin-left: 12px
+    margin-left: 8px;
+    color: black;
+}
+
+.action a:hover {
+    color: red;
 }
 
 .action a>i {
     font-size: 18px;
     text-align: center;
+    
 }

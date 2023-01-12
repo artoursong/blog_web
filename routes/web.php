@@ -61,6 +61,11 @@ Route::get('/blog/{slug}', [BlogController::class, 'getBlog'])->name('getBlog');
 
 Route::get('/blog/blogs_user/{id}', [BlogController::class, 'getBlogsOfUser'])->middleware(CheckCurrentUser::class)->name('blogsOfUser');
 
+Route::get('/blog/edit_blog/{id}/{slug}', [BlogController::class, 'editBLog'])->middleware(checkCurrentUser::class)->name('editBlog');
+
+Route::post('/blog/update/{id}/{id_blog}', [BlogController::class, 'updateBlog'])->middleware(checkCurrentUser::class)->name('updateBlog');
+
+Route::get('/blog/delete/{id}/{id_blog}', [BlogController::class, 'deleteBlog'])->middleware(checkCurrentUser::class)->name('deleteBlog');
 /*Blog Route End*/
 
 /*CKFinder Route*/

@@ -12,6 +12,9 @@
     @include('layout.header')
     <div class="container">
         <h1>YOUR BLOG</h1>
+        <a href="{{URL::route('getCreateForm')}}">
+            <i class="fas fa-plus"></i>
+        </a>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -22,29 +25,34 @@
                 </tr>
             </thead>
             <tbody>
+                @if ($status)
+                    <div class="alert alert-danger" role="alert">
+                        {!! $status !!}
+                    </div>
+                @endif
                 @foreach ($blogs as $item)
                     <tr>
                         <th style="width: 20%" scope="row">{{$item->title}}</th>
                         <td style="width: 20%">{{$item->subtitle}}</td>
                         <td style="text-align: center">
                             @if(is_null($item->image_url) || !file_exists( public_path().'/images/'.$item->image_url ))
-                            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+                            <a class="px-3 me-2" href="">
                             <img style="width: 200px; height: 200px" src="{{asset('images/default-thumbnail.jpg')}}" alt="">
                             </a>
                             @else
-                            <a class="px-3 me-2" href="{{ URL::route('get_info_user') }}">
+                            <a class="px-3 me-2" href="">
                             <img style="width: 200px; height: 200px" src="{{asset('images/'. $item->image_url)}}" alt="">
                             </a>
                             @endif
                         </td>
                         <td class="action">
-                            <a href="">
+                            <a href="{{ URL::route('getBlog', $item->slug) }}">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <a href="">
+                            <a href="{{ URL::route('editBlog', [Auth::user()->id, $item->slug])}}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a href="">
+                            <a href="{{ URL::route('deleteBlog', [Auth::user()->id, $item->id])}}">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>

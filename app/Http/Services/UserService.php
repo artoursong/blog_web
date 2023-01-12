@@ -46,6 +46,9 @@ class UserService
             if(session('url.intended') === url('/signup')) {
                 return redirect()->route('get_new_blogs');
             }
+            if(session('url.intended') === url('/login')) {
+                return redirect()->route('get_new_blogs');
+            }
             return redirect()->intended();
         }
         return back()->with('error', 'password or email not valid');

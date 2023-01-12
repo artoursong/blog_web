@@ -39,4 +39,19 @@ class BlogController extends Controller
         $blogservice = new BlogService();
         return $blogservice->getBlogsOfUser($id);
     }
+
+    public function editBlog($id, $slug) {
+        $blogservice = new BlogService();
+        return $blogservice->editBlog($id, $slug);
+    }
+
+    public function updateBlog($id, $id_blog, Request $request) {
+        $blogservice = new BlogService();
+        return $blogservice->updateBlog($id, $id_blog, $request);
+    }
+
+    public function deleteBlog($id, $id_blog) {
+        $blogservice = new BlogService();
+        return $blogservice->deleteBlog($id, $id_blog);
+    }
 }

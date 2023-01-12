@@ -54,7 +54,7 @@
         </a>
       </div>
       <div class="mb-2 col-sm-6 col-md-4">
-        <a class="menu-item" href="{{ URL::route('getCreateForm')}}">
+        <a class="menu-item" href="{{ URL::route('blogsOfUser', Auth::user()->id)}}">
           <div class="el-card card-item text-center is-hover-shadow">
             <div class="el-card__body">
               <img src="{{asset('images/my_blog.png')}}" alt="">
