@@ -11,7 +11,6 @@
 </head>
 <body>
 @include('layout.header')
-
     <div class="row container blog-layout">
         <div class="leftcolumn">
             @foreach ($blogs as $item)
@@ -43,7 +42,6 @@
             </div>
         </div>
     </div>
-
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
 </body>
