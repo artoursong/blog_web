@@ -33,11 +33,12 @@
 .comment-content .comment {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 60px;
 }
 
-.comment-content .comment>img {
+.comment-content .comment img {
     width: 48px;
     height: 48px;
     border-radius: 9999px;
@@ -47,11 +48,9 @@
     font-weight: bold;
     font-size: 18px !important;
     white-space: nowrap;
+    margin: unset
 }
 
-.comment-content .comment .comment-text {
-
-}
 
 .submit-comment {
     margin-top: 32px;
@@ -68,4 +67,60 @@
 .submit-comment>button:hover {
     background-color: #3d4450;
     color: #fff;
+}
+
+.comment-parent {
+    position: relative;
+}
+
+.comment-item {
+    width: 100%;
+}
+
+.comment-child {
+    position: relative;
+    margin-left: 44px;
+}
+
+.comment-last-child {
+    position: relative;
+    margin-left: 60px;
+}
+
+.comment-text {
+    margin: unset
+}
+
+.comment-data {
+    flex-direction: column;
+    margin-left: 24px;
+    border: 1px solid black;
+    padding: 8px 10px;
+    border-radius: 12px;
+}
+
+.action {
+    display: flex;
+    gap: 16px;
+    margin-left: 80px;
+    margin-top: 10px
+}
+
+
+.action a:hover {
+    cursor: pointer;
+    color: red;
+    transition: 0.3s;
+}
+
+.reply-comment {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    padding: 16px 8px;
+}
+
+.reply-submit {
+    margin: unset;
+    padding: unset
 }

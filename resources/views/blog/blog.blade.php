@@ -36,19 +36,21 @@
                 <hr></hr>
 
                 <div class="comment-content">
-                    <div class="comment">
-                        <img src="" alt="">
-                        <div>
-                            <div class="user-comment"></div>
-                            <div class="comment-text">Lứa này của Việt Nam không cóng như lứa Huỳnh Đức, Hồng Sơn. Tất nhiên nhìn thực tế thì Tháilan 10, Vietnam mới 7. Dù sao cũng ủng hộ Vietnam vô địch để tri ân Thầy Park...</div>
-                        </div>
+                    <div class="comment"> 
+                    
                     </div>
                 </div>
             </div>
+                   
+                    
         </div>
-
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
+    <script>
+        window.blog_id = "{{$blog->slug}}";
+    </script>
+    <script type="text/javascript" src="{{asset('js/renderComment.js')}}"></script>
 </body>
 </html>

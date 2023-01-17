@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Cateofpost;
+use App\Http\Services\CommentService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 
@@ -63,14 +64,20 @@ class BlogService extends ConvertSlug
 
     public function getBlog($slug) {
         $blog = Blog::where('slug', $slug)->first();
-        $view = view('blog.blog')->with('blog', $blog);
-        return $view;
+        return view('blog.blog')->with('blog', $blog);
     }
 
     public function getNewBlogs() {
         $blogs = Blog::orderBy('id', 'desc')
-                    ->select(['id', 'title', 'subtitle', 'image_url', 'slug', 'created_at'])
-                    ->take(2)->get();
+                        ->select([
+                            'id', 
+                            'title', 
+                            'subtitle', 
+                            'image_url', 
+                            'slug', 
+                            'created_at'
+                            ])
+                            ->take(2)->get();
         $view = view('home.home')->with('blogs', $blogs);
         return $view;
     }

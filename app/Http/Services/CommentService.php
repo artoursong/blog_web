@@ -28,13 +28,44 @@ class CommentService
 
         $comment->save();
 
+        Comment::where('id', $comment->id)->update(['comments_parents' => $comment->id]);   
+        return back();
    }
    
-   public function loadComment($id) 
-   {
-        $blog = Blog::where('id', $id)->first();
-        $comment = Comment::where('blog_id', $blog->id);
+   public function replies($comment_id, Request $request) {
+        $comment = Comment::where('id', $comment_id)->first();
 
-        return $comment;
+        $reply = new Comment([
+            'user_id' => Auth::user()->id,
+            'blog_id' => $comment->blog_id,
+            'content' => $request->content,
+        ]);
+
+        $comments_parents = $comment->comments_parents . "." . $reply->id;
+        
+        $reply->comments_parents = $comments_parents;
+
+        $reply->save();
+
+        return back();
+   }
+
+   public function loadComment($slug) 
+   {
+        $blog = Blog::where('slug', $slug)->first();
+        $comments = Comment::select([
+                            'comments.id',
+                            'comments.content',
+                            'comments.comments_parents',
+                            'users.username',
+                            'users.image_url',
+                            'comments.user_id'
+                            ])
+                            ->join('users', 'users.id', "=", "comments.user_id")
+                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "asc")->get();
+
+        
+
+        return back()->with('comments', $comments);
    }
 }
