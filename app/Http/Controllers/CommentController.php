@@ -14,9 +14,9 @@ class CommentController extends Controller
         return $commentservice->addComment($slug, $request);
    }
 
-   public function loadComment($slug) 
+   public function loadComment($id) 
    {
         $commentservice = new CommentService();
-        return $commentservice->loadComment($slug);
+        return $commentservice->loadComment($id);
    }
 }

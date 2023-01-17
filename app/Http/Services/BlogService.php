@@ -64,7 +64,9 @@ class BlogService extends ConvertSlug
 
     public function getBlog($slug) {
         $blog = Blog::where('slug', $slug)->first();
-        return view('blog.blog')->with('blog', $blog);
+        $commentService = new CommentService();
+        $comments = $commentService->loadComment($slug);
+        return view('blog.blog')->with('blog', $blog)->with('comments', $comments);
     }
 
     public function getNewBlogs() {

@@ -88,6 +88,6 @@ Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->nam
 
 /*Comment route*/
 
-Route::post('comment/{id}', [CommentController::class, 'addComment'])->middleware(Authenticate::class)->name('addComment');
+Route::post('blog/comment/{id}', [CommentController::class, 'addComment'])->middleware(Authenticate::class)->name('addComment');
 
-Route::get('blog/loadcomment/{slug}', [CommentController::class, 'loadComment'])->name('loadCommnet');
+Route::get('blog/loadcomment/{id}', [CommentController::class, 'loadComment'])->name('loadCommnet');

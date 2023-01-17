@@ -28,8 +28,10 @@ class CommentService
 
         $comment->save();
 
-        Comment::where('id', $comment->id)->update(['comments_parents' => $comment->id]);   
-        return back();
+        Comment::where('id', $comment->id)->update(['comments_parents' => $comment->id]);
+        
+        $comment_last = Comment::order_by('id', 'desc')->first();
+        return $comment_last;
    }
    
    public function replies($comment_id, Request $request) {
@@ -66,6 +68,6 @@ class CommentService
 
         
 
-        return back()->with('comments', $comments);
+        return $comments;
    }
 }
