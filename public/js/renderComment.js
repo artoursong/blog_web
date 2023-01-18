@@ -54,213 +54,47 @@ var Comment = {
                 data: {
                     comment : $(Comment.SELECTORS.text_comment).val()
                 },
-                success: function(response) {
-                    let html = "";
-
-                    imagePath = host + '/images/' + response.image_url;
-                        
-                    html += '<div class="comment-parent comment-item">'
-                            + '<div class= "d-flex">';
-
-                    if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-                    else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                    
-                    html += '<div class="comment-data d-flex">' 
-                            + '<p class="user-comment">' + `${response.username}` + '</p>'
-                            + '<p class="comment-text">' + `${response.content}` + '</p>'
-                            + '</div>'
-                            + '</div>'
-                            + '<div class="action">'
-                            + '<a class="like" href="">like</a>'
-                            + '<a class="reply"' + `alt=${response.id}` +  '>reply</a>';
-                    if (item.user_id == window.auth_id) html += '<a href="">edit</a>'
-                    
-                    html += '</div>' + '<div class="reply-form"'+ `alt=${response.id}` + '></div>'
-                            + '</div>';
-
-                    $(Comment.SELECTORS.comment).append(html)
-                },
             })
+
+            .done(function(response) {
+                let html = "";
+
+                imagePath = host + '/images/' + response[0].image_url,
+                    
+                html += '<div class="comment-parent comment-item">'
+                        + '<div class= "d-flex">';
+
+                if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
+                else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
+                
+                html += '<div class="comment-data d-flex">' 
+                        + '<p class="user-comment">' + `${response[0].username}` + '</p>'
+                        + '<p class="comment-text">' + `${response[0].content}` + '</p>'
+                        + '</div>'
+                        + '</div>'
+                        + '<div class="action">'
+                        + '<a class="like" href="">like</a>'
+                        + '<a class="reply"' + `alt=${response[0].id}` +  '>reply</a>';
+                if (response[0].user_id == window.auth_id) html += '<a href="">edit</a>'
+                
+                html += '</div>' + '<div class="reply-form"'+ `alt=${response[0].id}` + '></div>'
+                        + '</div>';
+
+                $(Comment.SELECTORS.comment).prepend(html)
+            })
+            .fail(function( xhr, status, errorThrown ) {
+                if(errorThrown == 'Unauthorized') { 
+                    window.location.href = "http://127.0.0.1:8000/login";
+                }
+                // alert( "Sorry, there was a problem!" );
+                // console.log( "Error: " + errorThrown );
+                // console.log( "Status: " + status );
+                // console.dir( xhr );
+            })
+             
         })
     }
 
-    // replySubmit:function() {
-    //     $(Comment.SELECTORS.reply_submit).on("click", function(e) {
-    //         e.preventDefault();
-            
-    //         $.ajax({
-    //             url: ""
-    //         })
-    //     }) 
-    // }
-
-    // renderComment: function() {
-    //     var host = 'http://' + window.location.host;
-    //     var blog_id = window.blog_id;
-    //     var auth_id = window.auth_id;
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'loadcomment/' + blog_id.toString(),
-    //         success: function (response) {
-    //             let html = "";
-    //             response.forEach(myFunction = (item, index, arr) => { 
-    //                 if(((item.comments_parents).split(".").length - 1) == 0) {
-    //                     imagePath = host + '/images/' + item.image_url;
-                        
-    //                     html += '<div class="comment-parent comment-item">'
-    //                             + '<div class= "d-flex">';
-
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                        
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` +  '>reply</a>';
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>'
-    //                     }
-                        
-    //                     html += '</div>' + '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //                 else if(((item.comments_parents).split(".").length - 1) == 1) {
-    //                     html += '<div class="comment-child comment-item">'
-    //                             + '<div class= "d-flex">'
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                                
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` + '>reply</a>'
-                                
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>' 
-    //                                 + '</div>'
-    //                     }
-                        
-    //                     html += '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //                 else {
-    //                     html += '<div class="comment-last-child comment-item">'
-    //                             + '<div class= "d-flex">'
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                               
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` + '>reply</a>'
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>' 
-    //                                 + '</div>'
-    //                     }
-                        
-    //                     html += '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //             });
-    //             $(Comment.SELECTORS.comment).html(html)
-    //         },renderComment: function() {
-    //     var host = 'http://' + window.location.host;
-    //     var blog_id = window.blog_id;
-    //     var auth_id = window.auth_id;
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'loadcomment/' + blog_id.toString(),
-    //         success: function (response) {
-    //             let html = "";
-    //             response.forEach(myFunction = (item, index, arr) => { 
-    //                 if(((item.comments_parents).split(".").length - 1) == 0) {
-    //                     imagePath = host + '/images/' + item.image_url;
-                        
-    //                     html += '<div class="comment-parent comment-item">'
-    //                             + '<div class= "d-flex">';
-
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                        
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` +  '>reply</a>';
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>'
-    //                     }
-                        
-    //                     html += '</div>' + '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //                 else if(((item.comments_parents).split(".").length - 1) == 1) {
-    //                     html += '<div class="comment-child comment-item">'
-    //                             + '<div class= "d-flex">'
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                                
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` + '>reply</a>'
-                                
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>' 
-    //                                 + '</div>'
-    //                     }
-                        
-    //                     html += '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //                 else {
-    //                     html += '<div class="comment-last-child comment-item">'
-    //                             + '<div class= "d-flex">'
-    //                     if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
-    //                     else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
-                               
-    //                     html += '<div class="comment-data d-flex">' 
-    //                             + '<p class="user-comment">' + `${item.username}` + '</p>'
-    //                             + '<p class="comment-text">' + `${item.content}` + '</p>'
-    //                             + '</div>'
-    //                             + '</div>'
-    //                             + '<div class="action">'
-    //                             + '<a class="like" href="">like</a>'
-    //                             + '<a class="reply"' + `alt=${item.id}` + '>reply</a>'
-    //                     if (item.user_id == auth_id) {
-    //                         html += '<a href="">edit</a>' 
-    //                                 + '</div>'
-    //                     }
-                        
-    //                     html += '<div class="reply-form"'+ `alt=${item.id}` + '></div>'
-    //                             + '</div>'
-    //                 }
-    //             });
-    //             $(Comment.SELECTORS.comment).html(html)
-    //         },
-    //     })
-    // },
-    //     })
-    // },
 };
 
 $(document).ready(function () {

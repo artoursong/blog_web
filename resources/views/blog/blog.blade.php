@@ -14,7 +14,6 @@
 
     @include('layout.header')
 
-    
     <div class="container content-container">
         <h1 class="content-header">{{$blog->title}}</h1>
         {!! $blog->content !!}
@@ -54,7 +53,7 @@
                             <div class="action">
                                 <a class="like" href="">like</a>
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
-                                @if ($item->user_id == Auth::user()->id)
+                                @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                 @endif
                             </div>
@@ -76,7 +75,7 @@
                             <div class="action">
                                 <a class="like" href="">like</a>
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
-                                @if ($item->user_id == Auth::user()->id)
+                                @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                 @endif
                             </div>
@@ -98,8 +97,8 @@
                             </div>
                             <div class="action">
                                 <a class="like" href="">like</a>
-                                <a class="reply" alt="{{$item->id}}" href="">reply</a>
-                                @if ($item->user_id == Auth::user()->id)
+                                    <a class="reply" alt="{{$item->id}}" href="">reply</a>
+                                @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                 @endif
                             </div>

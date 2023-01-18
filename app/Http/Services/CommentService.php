@@ -5,6 +5,9 @@ namespace App\Http\Services;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\User;
+use Illuminate\Routing\Response;
+use Egulias\EmailValidator\Parser\IDLeftPart;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -25,16 +28,25 @@ class CommentService
             'blog_id' => $blog->id,
             'user_id' => Auth::user()->id,
         ]);
-
         $comment->save();
 
         Comment::where('id', $comment->id)->update(['comments_parents' => $comment->id]);
         
-        $comment_last = Comment::order_by('id', 'desc')->first();
-        return $comment_last;
-   }
+        $comment = Comment::select([
+            'comments.id',
+            'comments.content',
+            'comments.comments_parents',
+            'users.username',
+            'users.image_url',
+            'comments.user_id'
+            ])
+            ->join('users', 'users.id', "=", "comments.user_id")
+            ->where("comments.id", $comment->id)->get();
+
+        return $comment;
+    }
    
-   public function replies($comment_id, Request $request) {
+    public function replies($comment_id, Request $request) {
         $comment = Comment::where('id', $comment_id)->first();
 
         $reply = new Comment([
@@ -50,10 +62,9 @@ class CommentService
         $reply->save();
 
         return back();
-   }
+    }
 
-   public function loadComment($slug) 
-   {
+    public function loadComment($slug) {
         $blog = Blog::where('slug', $slug)->first();
         $comments = Comment::select([
                             'comments.id',
@@ -64,10 +75,8 @@ class CommentService
                             'comments.user_id'
                             ])
                             ->join('users', 'users.id', "=", "comments.user_id")
-                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "asc")->get();
-
-        
+                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "desc")->get();
 
         return $comments;
-   }
+    }
 }
