@@ -52,19 +52,24 @@
 }
 
 
-.submit-comment {
+.reply-submit, .submit-comment {
     margin-top: 32px;
     display: flex;
     justify-content: flex-end;
     padding: 0px 30px 30px 0px;
 }
 
-.submit-comment>button {
+.reply-submit>button, .submit-comment>button {
     padding: 8px 32px;
     border-radius: 8px;
 }
 
 .submit-comment>button:hover {
+    background-color: #3d4450;
+    color: #fff;
+}
+
+.reply-submit>button:hover {
     background-color: #3d4450;
     color: #fff;
 }

@@ -6,15 +6,17 @@ var Comment = {
     SELECTORS: {
         reply_form: ".reply-form",
         reply: ".comment .action .reply",
-        reply_submit: ".reply-button",
+        reply_comment_button: ".reply-submit>button",
         comment: ".comment",
         text_comment: ".text-comment",
-        add_comment_button: ".submit-comment>button"
+        add_comment_button: ".submit-comment>button",
+        reply_comment: ".reply-comment"
     },
 
     init: function() {
         Comment.replyFunction();
         Comment.addComment();
+        Comment.addReply();
     },
 
     checkExistsImage: function(path) {
@@ -31,7 +33,7 @@ var Comment = {
             e.preventDefault();
             let selectalt = $(this).attr("alt");
             let formSubmit = "<textarea class='reply-comment'>Your Comment</textarea>" 
-                            + "<div class='submit-comment reply-submit'>" 
+                            + "<div class='reply-submit'>" 
                             + "<button class='reply-button' type='submit'>Comment</button> </div>";
             $(Comment.SELECTORS.reply_form + `[alt=${selectalt}]`).html(formSubmit);
         })
@@ -46,7 +48,7 @@ var Comment = {
                 headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-              });
+            });
 
             $.ajax({
                 type: 'POST',
@@ -92,6 +94,42 @@ var Comment = {
                 // console.dir( xhr );
             })
              
+        })
+    },
+
+    addReply: function() {
+        $(Comment.SELECTORS.reply_comment_button).on("click", function(e) {
+            e.preventDefault();
+
+            let comment_id = $(this).attr('alt');
+            var host = 'http://' + window.location.host;
+
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: 'replycomment/' + comment_id,
+                data: {
+                    comment: $(Comment.SELECTORS.reply_comment).val(),
+                    user_id: window.auth_id,
+                    blog_id: window.blog_id
+                }
+            })
+
+            .done(function(response) {
+                alert('ist okay');
+            })
+
+            .fail(function(xhr, status, errorThrown) {
+                alert( "Sorry, there was a problem!" );
+                console.log( "Error: " + errorThrown );
+                console.log( "Status: " + status );
+                console.dir( xhr );
+            })
         })
     }
 

@@ -47,11 +47,15 @@ class CommentService
     }
    
     public function replies($comment_id, Request $request) {
+        $request->validate([
+            'content' => 'required'
+        ]);
+
         $comment = Comment::where('id', $comment_id)->first();
 
         $reply = new Comment([
             'user_id' => Auth::user()->id,
-            'blog_id' => $comment->blog_id,
+            'blog_id' => $request->blog_id,
             'content' => $request->content,
         ]);
 

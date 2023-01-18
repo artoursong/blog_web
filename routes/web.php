@@ -7,6 +7,7 @@ use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckCurrentUser;
+use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,3 +92,5 @@ Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->nam
 Route::post('blog/comment/{id}', [CommentController::class, 'addComment'])->middleware(Authenticate::class)->name('addComment');
 
 Route::get('blog/loadcomment/{id}', [CommentController::class, 'loadComment'])->name('loadCommnet');
+
+Route::post('blog/replycomment/{id}', [CommentController::class, 'replyComment'])->middleware(Authenticate::class)->name('replyComment');
