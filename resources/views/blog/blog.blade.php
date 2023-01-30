@@ -38,7 +38,7 @@
                     <div class="comment"> 
                     @foreach ($comments as $item)
                         @if (substr_count($item->comments_parents, '.') == 0)
-                        <div class="comment-parent comment-item">
+                        <div class="comment-parent comment-item" alt="{{$item->id}}">
                             <div class= "d-flex">
                                 @if(is_null($item->image_url) || !file_exists( public_path().'/images/'.$item->image_url ))
                                 <img src="{{asset('images/user.svg')}}" alt="">

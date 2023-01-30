@@ -8,15 +8,20 @@ use Illuminate\Support\Facades\View;
 
 class CommentController extends Controller
 {
-   public function addComment($slug, Request $request)
-   {
+     public function addComment($slug, Request $request)
+     {
         $commentservice = new CommentService();
         return $commentservice->addComment($slug, $request);
-   }
+     }
 
-   public function loadComment($id) 
-   {
+     public function loadComment($id) 
+     {
         $commentservice = new CommentService();
         return $commentservice->loadComment($id);
-   }
+     }
+
+     public function replyComment($comment_id, Request $request) {
+         $commentservice = new CommentService();
+         return $commentservice->replies($comment_id, $request);
+     }
 }

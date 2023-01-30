@@ -8,9 +8,11 @@ var Comment = {
         reply: ".comment .action .reply",
         reply_comment_button: ".reply-submit>button",
         comment: ".comment",
+        comment_parent: ".comment-parent",
         text_comment: ".text-comment",
         add_comment_button: ".submit-comment>button",
-        reply_comment: ".reply-comment"
+        reply_comment: ".reply-comment",
+        comment_item: ".comment .comment-item"
     },
 
     init: function() {
@@ -32,9 +34,9 @@ var Comment = {
         $(Comment.SELECTORS.reply).on("click", function(e) {
             e.preventDefault();
             let selectalt = $(this).attr("alt");
-            let formSubmit = "<textarea class='reply-comment'>Your Comment</textarea>" 
-                            + "<div class='reply-submit'>" 
-                            + "<button class='reply-button' type='submit'>Comment</button> </div>";
+            let formSubmit = '<textarea class="reply-comment">Your Comment</textarea>' 
+                            + '<div class="reply-submit">' 
+                            + '<button class="reply-button" type="submit"' + `alt=${selectalt}` + '>Comment</button> </div>';
             $(Comment.SELECTORS.reply_form + `[alt=${selectalt}]`).html(formSubmit);
         })
     },
@@ -88,17 +90,13 @@ var Comment = {
                 if(errorThrown == 'Unauthorized') { 
                     window.location.href = "http://127.0.0.1:8000/login";
                 }
-                // alert( "Sorry, there was a problem!" );
-                // console.log( "Error: " + errorThrown );
-                // console.log( "Status: " + status );
-                // console.dir( xhr );
             })
              
         })
     },
 
     addReply: function() {
-        $(Comment.SELECTORS.reply_comment_button).on("click", function(e) {
+        $(Comment.SELECTORS.comment_item).on("click", Comment.SELECTORS.reply_comment_button, function(e) {
             e.preventDefault();
 
             let comment_id = $(this).attr('alt');
@@ -111,17 +109,42 @@ var Comment = {
             });
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: 'replycomment/' + comment_id,
                 data: {
-                    comment: $(Comment.SELECTORS.reply_comment).val(),
+                    content: $(Comment.SELECTORS.reply_comment).val(),
                     user_id: window.auth_id,
                     blog_id: window.blog_id
                 }
             })
 
             .done(function(response) {
-                alert('ist okay');
+                let html = "";
+                imagePath = host + '/images/' + response[0].image_url;
+
+                html += '<div class="comment-child comment-item">'
+                        + '<div class= "d-flex">';
+
+                if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
+                else html += '<img src="http://127.0.0.1:8000/images/user.svg" alt="">';
+                
+                html += '<div class="comment-data d-flex">' 
+                        + '<p class="user-comment">' + `${response[0].username}` + '</p>'
+                        + '<p class="comment-text">' + `${response[0].content}` + '</p>'
+                        + '</div>'
+                        + '</div>'
+                        + '<div class="action">'
+                        + '<a class="like" href="">like</a>'
+                        + '<a class="reply"' + `alt=${response[0].id}` +  '>reply</a>';
+                if (response[0].user_id == window.auth_id) html += '<a href="">edit</a>'
+                
+                html += '</div>' + '<div class="reply-form"'+ `alt=${response[0].id}` + '></div>'
+                        + '</div>';
+
+                $(Comment.SELECTORS.comment_parent + `[alt=${comment_id}]`).append(html);
+
+                $(Comment.SELECTORS.reply_form + `[alt=${comment_id}]`).html("");
+                
             })
 
             .fail(function(xhr, status, errorThrown) {

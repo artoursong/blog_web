@@ -30,7 +30,16 @@ class CommentService
         ]);
         $comment->save();
 
-        Comment::where('id', $comment->id)->update(['comments_parents' => $comment->id]);
+        $numlength = strlen((string)$comment->id);
+
+        $comment_parent = '';
+
+        if($numlength == 1) $comment_parent = '000'. (string)$comment->id;
+        if($numlength == 2) $comment_parent = '00'. (string)$comment->id;
+        if($numlength == 3) $comment_parent = '0'. (string)$comment->id;
+        if($numlength == 4) $comment_parent = (string)$comment->id;
+
+        Comment::where('id', $comment->id)->update(['comments_parents' => $comment_parent]);
         
         $comment = Comment::select([
             'comments.id',
@@ -47,6 +56,7 @@ class CommentService
     }
    
     public function replies($comment_id, Request $request) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $request->validate([
             'content' => 'required'
         ]);
@@ -59,13 +69,35 @@ class CommentService
             'content' => $request->content,
         ]);
 
-        $comments_parents = $comment->comments_parents . "." . $reply->id;
-        
-        $reply->comments_parents = $comments_parents;
-
         $reply->save();
 
-        return back();
+        $numlength = strlen((string)$reply->id);
+
+        $comment_parent = '';
+
+        if($numlength == 1) $comment_parent = '000'. (string)$reply->id;
+        if($numlength == 2) $comment_parent = '00'. (string)$reply->id;
+        if($numlength == 3) $comment_parent = '0'. (string)$reply->id;
+        if($numlength == 4) $comment_parent = (string)$reply->id;
+
+        $parent = $comment->comments_parents . "." . $comment_parent;
+        
+        $reply->comments_parents = $parent;
+
+        Comment::where('id', $reply->id)->update(['comments_parents' => $parent]);
+
+        $comment = Comment::select([
+            'comments.id',
+            'comments.content',
+            'comments.comments_parents',
+            'users.username',
+            'users.image_url',
+            'comments.user_id'
+            ])
+            ->join('users', 'users.id', "=", "comments.user_id")
+            ->where("comments.id", $reply->id)->get();
+
+        return $comment;
     }
 
     public function loadComment($slug) {
@@ -79,8 +111,8 @@ class CommentService
                             'comments.user_id'
                             ])
                             ->join('users', 'users.id', "=", "comments.user_id")
-                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "desc")->get();
-
+                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "asc")->get();
+        
         return $comments;
     }
 }
