@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckCurrentUser;
 use App\Models\Comment;
@@ -94,3 +95,7 @@ Route::post('blog/comment/{id}', [CommentController::class, 'addComment'])->midd
 Route::get('blog/loadcomment/{id}', [CommentController::class, 'loadComment'])->name('loadCommnet');
 
 Route::post('blog/replycomment/{id}', [CommentController::class, 'replyComment'])->middleware(Authenticate::class)->name('replyComment');
+
+Route::post('blog/likecomment/{id}', [LikeController::class, 'addLike'])->middleware(Authenticate::class)->name('addLike');
+
+Route::get('blog/checklike/{id}', [LikeController::class, 'checkLike'])->name('checkLike');

@@ -50,12 +50,16 @@
                                     <p class="comment-text">{{$item->content}}</p>
                                 </div>
                             </div>
-                            <div class="action">
-                                <a class="like" href="">like</a>
+                            <div class="action" alt="{{$item->id}}">
+                                <a class="like" alt="{{$item->id}}">like</a>
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                 @endif
+                                <div>
+                                    <span class="like-count" alt="{{$item->id}}">{{$item->like_sum}}</span>
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </div>
                             </div>
                             <div class="reply-form" alt="{{$item->id}}"></div>
                         </div>
@@ -72,35 +76,16 @@
                                     <p class="comment-text">{{$item->content}}</p>
                                 </div>
                             </div>
-                            <div class="action">
-                                <a class="like" href="">like</a>
+                            <div class="action" alt="{{$item->id}}">
+                                <a class="like" alt="{{$item->id}}">like</a>
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                 @endif
-                            </div>
-                            <div class="reply-form" alt="{{$item->id}}"></div>
-                        </div>
-                        @else
-                        <div class="comment-last-child comment-item" alt="{{$item->id}}">
-                            <div class= "d-flex">
-                                @if(is_null($item->image_url) || !file_exists( public_path().'/images/'.$item->image_url ))
-                                <img src="{{asset('images/user.svg')}}" alt="">
-                                @else
-                                <img src="{{asset('images/'. $item->image_url)}}" alt="">
-                                @endif
-                                <div class="comment-data d-flex">
-                                    <p class="user-comment">{{$item->username}}</p>
-                                    <p class="comment-text">{{$item->content}}</p>
+                                <div class="">
+                                    <span class="like-count" alt="{{$item->id}}">{{$item->like_sum}}</span>
+                                    <i class="fa-solid fa-thumbs-up"></i>
                                 </div>
-                                <div class="reply-form" alt="{{$item->id}}"></div>
-                            </div>
-                            <div class="action">
-                                <a class="like" href="">like</a>
-                                    <a class="reply" alt="{{$item->id}}" href="">reply</a>
-                                @if (Auth::check() && $item->user_id == Auth::user()->id)
-                                    <a href="">edit</a>
-                                @endif
                             </div>
                             <div class="reply-form" alt="{{$item->id}}"></div>
                         </div>

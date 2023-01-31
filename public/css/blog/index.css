@@ -35,7 +35,7 @@
     align-items: flex-start;
     margin-bottom: 30px;
     flex-direction: column;
-    gap: 60px;
+    gap: 24px;
 }
 
 .comment-content .comment img {
@@ -102,6 +102,11 @@
     border: 1px solid black;
     padding: 8px 10px;
     border-radius: 12px;
+    width: 100%;
+}
+
+.action .liked {
+    color: red !important;
 }
 
 .action {

@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Like;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Cateofpost;

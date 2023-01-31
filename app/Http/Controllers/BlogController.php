@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\View;
 
 class BlogController extends Controller
 {
-    // private $blogservice;
-    
-    // public function __construct(BlogService $blogservice = null) {
-    //     $this->$blogservice = ($blogservice === null) ? new BlogService : $blogservice;
-    // }
-
     public function getCreateForm() {
         $blogservice = new BlogService();
         return $blogservice->getCreateForm();

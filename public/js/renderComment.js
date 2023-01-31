@@ -12,13 +12,18 @@ var Comment = {
         text_comment: ".text-comment",
         add_comment_button: ".submit-comment>button",
         reply_comment: ".reply-comment",
-        comment_item: ".comment .comment-item"
+        comment_item: ".comment .comment-item",
+        like: ".comment .action .like",
+        like_count: ".like-count",
+        action: ".comment .action"
     },
 
     init: function() {
         Comment.replyFunction();
+        Comment.checkAuthLike();
         Comment.addComment();
         Comment.addReply();
+        Comment.likeComment();
     },
 
     checkExistsImage: function(path) {
@@ -27,6 +32,26 @@ var Comment = {
         http.send();
         if (http.status!=404) return true;
         return false;
+    },
+
+    checkAuthLike: function() {
+        $.ajax({
+            type: 'GET',
+            url: 'checklike/' + window.blog_id,
+        })
+
+        .done(function(response) {
+            response.forEach(function(item, index) {
+                $(Comment.SELECTORS.like + `[alt=${item.id_comment}]`).addClass("liked");
+            })
+        })
+
+        .fail(function(xhr, status, errorThrown) {
+            alert( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+        })
     },
 
 
@@ -145,6 +170,42 @@ var Comment = {
 
                 $(Comment.SELECTORS.reply_form + `[alt=${comment_id}]`).html("");
                 
+            })
+
+            .fail(function(xhr, status, errorThrown) {
+                alert( "Sorry, there was a problem!" );
+                console.log( "Error: " + errorThrown );
+                console.log( "Status: " + status );
+                console.dir( xhr );
+            })
+        })
+    },
+
+    likeComment: function() {
+        $(Comment.SELECTORS.like).on("click", function(e) {
+            e.preventDefault();
+
+            let comment_id = $(this).attr('alt');
+
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: 'likecomment/' + comment_id,
+                data: {
+                    id_blog: window.blog_id
+                }
+            })
+
+            .done(function(response) {
+                if($(Comment.SELECTORS.like + `[alt=${response.id}]`).hasClass('liked')) $(Comment.SELECTORS.like + `[alt=${response.id}]`).removeClass('liked')
+                else $(Comment.SELECTORS.like + `[alt=${response.id}]`).addClass("liked")
+
+                $(Comment.SELECTORS.like_count + `[alt=${response.id}]`).text(response.like_sum);
             })
 
             .fail(function(xhr, status, errorThrown) {

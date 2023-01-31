@@ -4,13 +4,9 @@ namespace App\Http\Services;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\Like;
 use App\Models\Comment;
-use App\Models\User;
-use Illuminate\Routing\Response;
-use Egulias\EmailValidator\Parser\IDLeftPart;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
 
 class CommentService
 {
@@ -108,11 +104,13 @@ class CommentService
                             'comments.comments_parents',
                             'users.username',
                             'users.image_url',
-                            'comments.user_id'
+                            'comments.user_id',
+                            'comments.like_sum'
                             ])
                             ->join('users', 'users.id', "=", "comments.user_id")
                             ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "asc")->get();
         
         return $comments;
     }
+
 }
