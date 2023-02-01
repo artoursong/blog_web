@@ -55,6 +55,7 @@
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
+                                    <a class="delete" alt="{{$item->id}}">delete</a>
                                 @endif
                                 <div>
                                     <span class="like-count" alt="{{$item->id}}">{{$item->like_sum}}</span>
@@ -81,6 +82,7 @@
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
+                                    <a  class="delete" alt="{{$item->id}}">delete</a>
                                 @endif
                                 <div class="">
                                     <span class="like-count" alt="{{$item->id}}">{{$item->like_sum}}</span>

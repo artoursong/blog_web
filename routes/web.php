@@ -94,8 +94,16 @@ Route::post('blog/comment/{id}', [CommentController::class, 'addComment'])->midd
 
 Route::get('blog/loadcomment/{id}', [CommentController::class, 'loadComment'])->name('loadCommnet');
 
+Route::post('blog/deletecomment/{id}', [CommentController::class, 'deleteComment']);
+
 Route::post('blog/replycomment/{id}', [CommentController::class, 'replyComment'])->middleware(Authenticate::class)->name('replyComment');
+
+/*End Comment route*/
+
+/*Like route*/
 
 Route::post('blog/likecomment/{id}', [LikeController::class, 'addLike'])->middleware(Authenticate::class)->name('addLike');
 
 Route::get('blog/checklike/{id}', [LikeController::class, 'checkLike'])->name('checkLike');
+
+/*END LIKE ROUTE*/

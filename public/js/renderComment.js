@@ -15,7 +15,8 @@ var Comment = {
         comment_item: ".comment .comment-item",
         like: ".comment .action .like",
         like_count: ".like-count",
-        action: ".comment .action"
+        action: ".comment .action",
+        delete: ".comment .action .delete"
     },
 
     init: function() {
@@ -24,6 +25,7 @@ var Comment = {
         Comment.addComment();
         Comment.addReply();
         Comment.likeComment();
+        Comment.deleteComment();
     },
 
     checkExistsImage: function(path) {
@@ -54,6 +56,14 @@ var Comment = {
         })
     },
 
+    // loadComment: function(comments) {
+    //     let html = "";
+    //     comments.forEach(function(item) {
+    //         if((item.comments_parents).split('.').lenght - 1 == 0) {
+                
+    //         }
+    //     })
+    // },
 
     replyFunction: function() {
         $(Comment.SELECTORS.reply).on("click", function(e) {
@@ -90,7 +100,8 @@ var Comment = {
 
                 imagePath = host + '/images/' + response[0].image_url,
                     
-                html += '<div class="comment-parent comment-item">'
+                html += '<div class="comment-parent comment-item alt="' + 
+                        `${response[0].id}` + '">'
                         + '<div class= "d-flex">';
 
                 if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
@@ -102,14 +113,23 @@ var Comment = {
                         + '</div>'
                         + '</div>'
                         + '<div class="action">'
-                        + '<a class="like" href="">like</a>'
+                        + '<a class="like"' + `alt=${response[0].id}` +  '>like</a>'
                         + '<a class="reply"' + `alt=${response[0].id}` +  '>reply</a>';
                 if (response[0].user_id == window.auth_id) html += '<a href="">edit</a>'
-                
+                html += '<a class="delete"' + `alt=${response[0].id}` +  '>delete</a>'
+                        + '<div>'
+                        + '<span class="like-count" alt="' + `${response[0].id}` + '">' + `${response[0].like_sum}`+ '</span>'
+                        + '<i class="fa-solid fa-thumbs-up"></i>'
+                        + '</div>'
                 html += '</div>' + '<div class="reply-form"'+ `alt=${response[0].id}` + '></div>'
                         + '</div>';
 
-                $(Comment.SELECTORS.comment).prepend(html)
+                $(Comment.SELECTORS.comment).prepend(html);
+
+                Comment.likeComment();
+                Comment.replyFunction();
+                Comment.deleteComment();
+                Comment.addReply();
             })
             .fail(function( xhr, status, errorThrown ) {
                 if(errorThrown == 'Unauthorized') { 
@@ -118,6 +138,8 @@ var Comment = {
             })
              
         })
+
+        
     },
 
     addReply: function() {
@@ -215,8 +237,47 @@ var Comment = {
                 console.dir( xhr );
             })
         })
-    }
+    },
 
+    deleteComment: function() {
+        $(Comment.SELECTORS.delete).on('click', function() {
+            if(confirm("Are you sure about that")) {
+
+                $.ajaxSetup({
+                    headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+    
+                $.ajax({
+                    type: 'POST',
+                    url: 'deletecomment/' + $(this).attr('alt'),
+                    data: {
+                        id_blog : window.blog_id,
+                    },
+                })
+
+                .done(function(response){
+                    alert("done !");
+                    let html = "";
+                    console.log(response);
+                    $.each(response, function(index, item) {
+                        $(Comment.SELECTORS.comment_item + `[alt=${item.id}]`).html(html);
+                    })
+                })
+
+                .fail(function(xhr, status, errorThrown) {
+                    alert( "Sorry, there was a problem!" );
+                    console.log( "Error: " + errorThrown );
+                    console.log( "Status: " + status );
+                    console.dir( xhr );
+                })
+            }
+            else {
+
+            }
+        })
+    },
 };
 
 $(document).ready(function () {

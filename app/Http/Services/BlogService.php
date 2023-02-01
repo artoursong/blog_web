@@ -27,6 +27,7 @@ class BlogService extends ConvertSlug
             'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
         ]);
 
+        
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         

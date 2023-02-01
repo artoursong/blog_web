@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use Illuminate\Support\Str;
 use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,8 @@ class CommentService
             'comments.comments_parents',
             'users.username',
             'users.image_url',
-            'comments.user_id'
+            'comments.user_id',
+            'comments.like_sum'
             ])
             ->join('users', 'users.id', "=", "comments.user_id")
             ->where("comments.id", $comment->id)->get();
@@ -113,4 +115,30 @@ class CommentService
         return $comments;
     }
 
+    public function deleteComment($id, Request $request) {
+
+        $request->validate([
+            'id_blog' => 'required',
+        ]);
+        $id_comment = $id;
+
+        $numlength = strlen($id_comment);
+
+        if($numlength == 1) $id_comment = '000'. $id_comment;
+        if($numlength == 2) $id_comment = '00'. $id_comment;
+        if($numlength == 3) $id_comment = '0'. $id_comment;
+        if($numlength == 4) $id_comment = $id_comment;
+
+        $comments = Comment::where('blog_id', $request->id_blog)->orderBy("comments_parents", "desc")->get();
+
+        foreach ($comments as $key => $comment) {
+            if(Str::contains($comment->comments_parents, $id_comment)) {
+                Like::where('id_comment', $comment->id)->delete();
+                Comment::where('comments_parents', $comment->comments_parents)->delete();   
+            }
+            else unset($comments[$key]);
+        }
+        
+        return $comments;
+    }
 }
