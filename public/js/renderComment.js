@@ -100,8 +100,7 @@ var Comment = {
 
                 imagePath = host + '/images/' + response[0].image_url,
                     
-                html += '<div class="comment-parent comment-item alt="' + 
-                        `${response[0].id}` + '">'
+                html += '<div class="comment-parent comment-item"' + `alt=${response[0].id}` + '">'
                         + '<div class= "d-flex">';
 
                 if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
@@ -169,7 +168,7 @@ var Comment = {
                 let html = "";
                 imagePath = host + '/images/' + response[0].image_url;
 
-                html += '<div class="comment-child comment-item">'
+                html += '<div class="comment-child comment-item"' + `alt=${response[0].id}` + '">'
                         + '<div class= "d-flex">';
 
                 if(Comment.checkExistsImage(imagePath)) html += '<img src="' + `${imagePath}`+ '" alt="">';
@@ -182,7 +181,7 @@ var Comment = {
                         + '</div>'
                         + '<div class="action">'
                         + '<a class="like" href="">like</a>'
-                        + '<a class="reply"' + `alt=${response[0].id}` +  '>reply</a>';
+                        + '<a class="delete"' + `alt=${response[0].id}` +  '>delete</a>';
                 if (response[0].user_id == window.auth_id) html += '<a href="">edit</a>'
                 
                 html += '</div>' + '<div class="reply-form"'+ `alt=${response[0].id}` + '></div>'
@@ -191,6 +190,9 @@ var Comment = {
                 $(Comment.SELECTORS.comment_parent + `[alt=${comment_id}]`).append(html);
 
                 $(Comment.SELECTORS.reply_form + `[alt=${comment_id}]`).html("");
+
+                Comment.deleteComment();
+                Comment.likeComment();
                 
             })
 

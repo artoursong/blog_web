@@ -79,7 +79,6 @@
                             </div>
                             <div class="action" alt="{{$item->id}}">
                                 <a class="like" alt="{{$item->id}}">like</a>
-                                <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
                                     <a href="">edit</a>
                                     <a  class="delete" alt="{{$item->id}}">delete</a>
