@@ -98,6 +98,8 @@ Route::post('blog/deletecomment/{id}', [CommentController::class, 'deleteComment
 
 Route::post('blog/replycomment/{id}', [CommentController::class, 'replyComment'])->middleware(Authenticate::class)->name('replyComment');
 
+Route::post('blog/updatecomment/{id}', [CommentController::class, 'updateComment'])->middleware(Authenticate::class);
+
 /*End Comment route*/
 
 /*Like route*/

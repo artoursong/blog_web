@@ -9,6 +9,12 @@ class Like extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id_object',
+        'type',
+        'id_users'
+    ];
+
     protected $guarded = [
         'create_at',
         'update_at'

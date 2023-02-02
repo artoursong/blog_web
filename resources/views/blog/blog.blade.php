@@ -47,14 +47,14 @@
                                 @endif
                                 <div class="comment-data d-flex">
                                     <p class="user-comment">{{$item->username}}</p>
-                                    <p class="comment-text">{{$item->content}}</p>
+                                    <p class="comment-text" alt="{{$item->id}}">{{$item->content}}</p>
                                 </div>
                             </div>
                             <div class="action" alt="{{$item->id}}">
                                 <a class="like" alt="{{$item->id}}">like</a>
                                 <a class="reply" alt="{{$item->id}}" href="">reply</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
-                                    <a href="">edit</a>
+                                    <a class="edit" alt="{{$item->id}}">edit</a>
                                     <a class="delete" alt="{{$item->id}}">delete</a>
                                 @endif
                                 <div>
@@ -74,13 +74,13 @@
                                 @endif
                                 <div class="comment-data d-flex" id="{{$item->id}}">
                                     <p class="user-comment">{{$item->username}}</p>
-                                    <p class="comment-text">{{$item->content}}</p>
+                                    <p class="comment-text" alt="{{$item->id}}">{{$item->content}}</p>
                                 </div>
                             </div>
                             <div class="action" alt="{{$item->id}}">
                                 <a class="like" alt="{{$item->id}}">like</a>
                                 @if (Auth::check() && $item->user_id == Auth::user()->id)
-                                    <a href="">edit</a>
+                                    <a class="edit" alt="{{$item->id}}">edit</a>
                                     <a  class="delete" alt="{{$item->id}}">delete</a>
                                 @endif
                                 <div class="">

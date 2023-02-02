@@ -31,4 +31,10 @@ class CommentController extends Controller
       $commentservice = new CommentService();
       return $commentservice->deleteComment($id, $request);
    }
+
+   public function updateComment($id, Request $request) 
+   {
+      $commentservice = new CommentService();
+      return $commentservice->updateComment($id, $request);
+   }
 }

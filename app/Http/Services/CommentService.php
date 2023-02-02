@@ -110,7 +110,9 @@ class CommentService
                             'comments.like_sum'
                             ])
                             ->join('users', 'users.id', "=", "comments.user_id")
-                            ->where("comments.blog_id", $blog->id)->orderBy("comments_parents", "asc")->get();
+                            ->where("comments.blog_id", $blog->id)
+                            ->where("comments.is_update", false)
+                            ->orderBy("comments_parents", "asc")->get();
         
         return $comments;
     }
@@ -120,25 +122,48 @@ class CommentService
         $request->validate([
             'id_blog' => 'required',
         ]);
-        $id_comment = $id;
 
-        $numlength = strlen($id_comment);
+        $comment = Comment::where('id', $id)->first();
 
-        if($numlength == 1) $id_comment = '000'. $id_comment;
-        if($numlength == 2) $id_comment = '00'. $id_comment;
-        if($numlength == 3) $id_comment = '0'. $id_comment;
-        if($numlength == 4) $id_comment = $id_comment;
+        $comment_parent = $comment->comments_parents;
+
 
         $comments = Comment::where('blog_id', $request->id_blog)->orderBy("comments_parents", "desc")->get();
 
         foreach ($comments as $key => $comment) {
-            if(Str::contains($comment->comments_parents, $id_comment)) {
-                Like::where('id_comment', $comment->id)->delete();
-                Comment::where('comments_parents', $comment->comments_parents)->delete();   
+            if(Str::contains($comment->comments_parents, $comment_parent)) {
+                Like::where('id_object', $comment->id)->where('type', 'comment')->delete();
+                Comment::where('id', $comment->id)->delete();   
             }
             else unset($comments[$key]);
         }
         
+
         return $comments;
+    }
+
+    public function updateComment($id, Request $request) {
+        $request->validate([
+            'content' => 'required',
+            'blog_id' => 'required'
+        ]);
+
+        $old_comment = Comment::where('id', $id)->first();
+
+        $new_comment = new Comment([
+            'blog_id' => $request->blog_id,
+            'content' => $request->content,
+            'user_id' => Auth::user()->id,
+            'comments_parents' => $old_comment->comments_parents,
+            'like_sum' => $old_comment->like_sum,
+        ]);
+        
+        $new_comment->save();
+
+        Like::where('id_object', $id)->update(['id_object' => $new_comment->id]);
+
+        $old_comment = Comment::where('id', $id)->update(['is_update' => true]);
+
+        return $new_comment;
     }
 }

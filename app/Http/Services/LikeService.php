@@ -16,22 +16,18 @@ use MicrosoftAzure\Storage\Common\Internal\Validate;
 
 class LikeService
 {
-    public function addLike ($id, Request $request) 
+    public function addLike ($id) 
     {
 
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $request->validate([
-            'id_blog' => 'required',
-        ]);
 
-        $liked = Like::where('id_blog', $request->id_blog)
-                    ->where('id_users', Auth::user()->id)
-                    ->where('id_comment', $id)->first();
+        $liked = Like::where('id_users', Auth::user()->id)
+                    ->where('id_object', $id)->first();
 
         if($liked == null) {
             $like = new Like([
-                'id_blog' => $request->id_blog,
-                'id_comment' => $id,
+                'type' => 'comment',
+                'id_object' => $id,
                 'id_users' => Auth::user()->id,
             ]);
     
@@ -47,9 +43,9 @@ class LikeService
             return $comment;
         }
         else {
-            Like::where('id_blog', $request->id_blog)
+            Like::where('id_object', $id)
                 ->where('id_users', Auth::user()->id)
-                ->where('id_comment', $id)->delete();
+                ->delete();
 
             Comment::where('id', $id)->decrement('like_sum', 1);
             $comment = Comment::select([
@@ -57,7 +53,7 @@ class LikeService
                 'like_sum'
             ])
             ->where('id', $id)->first();
-
+            
 
             return $comment;
         }
@@ -67,11 +63,10 @@ class LikeService
     {
         if(Auth::check()) {
             $like = Like::select([
-                'id_comment',
-            ])
-            ->where('id_blog', $id_blog)
-            ->where('id_users', Auth::user()->id)
-            ->get();
+                'id_object'
+            ])->join('comments', 'likes.id_object', "=", "comments.id")
+            ->where('likes.type', 'comment')
+            ->where('comments.blog_id', $id_blog)->get();
             return $like;
         }
         else  {

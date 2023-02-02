@@ -16,7 +16,12 @@ var Comment = {
         like: ".comment .action .like",
         like_count: ".like-count",
         action: ".comment .action",
-        delete: ".comment .action .delete"
+        delete: ".comment .action .delete",
+        edit: ".comment .action .edit",
+        update_comment_button: ".update-submit>button",
+        update_comment: ".update-comment",
+        comment_text: ".comment-text",
+        like_count: ".like-count"
     },
 
     init: function() {
@@ -26,6 +31,8 @@ var Comment = {
         Comment.addReply();
         Comment.likeComment();
         Comment.deleteComment();
+        Comment.updateForm();
+        Comment.updateComment();
     },
 
     checkExistsImage: function(path) {
@@ -44,7 +51,7 @@ var Comment = {
 
         .done(function(response) {
             response.forEach(function(item, index) {
-                $(Comment.SELECTORS.like + `[alt=${item.id_comment}]`).addClass("liked");
+                $(Comment.SELECTORS.like + `[alt=${item.id_object}]`).addClass("liked");
             })
         })
 
@@ -56,15 +63,6 @@ var Comment = {
         })
     },
 
-    // loadComment: function(comments) {
-    //     let html = "";
-    //     comments.forEach(function(item) {
-    //         if((item.comments_parents).split('.').lenght - 1 == 0) {
-                
-    //         }
-    //     })
-    // },
-
     replyFunction: function() {
         $(Comment.SELECTORS.reply).on("click", function(e) {
             e.preventDefault();
@@ -72,6 +70,17 @@ var Comment = {
             let formSubmit = '<textarea class="reply-comment">Your Comment</textarea>' 
                             + '<div class="reply-submit">' 
                             + '<button class="reply-button" type="submit"' + `alt=${selectalt}` + '>Comment</button> </div>';
+            $(Comment.SELECTORS.reply_form + `[alt=${selectalt}]`).html(formSubmit);
+        })
+    },
+
+    updateForm: function() {
+        $(Comment.SELECTORS.edit).on("click", function(e) {
+            e.preventDefault();
+            let selectalt = $(this).attr("alt");
+            let formSubmit = '<textarea class="update-comment"></textarea>' 
+                            + '<div class="update-submit">' 
+                            + '<button class="update-button" type="submit"' + `alt=${selectalt}` + '>Update</button> </div>';
             $(Comment.SELECTORS.reply_form + `[alt=${selectalt}]`).html(formSubmit);
         })
     },
@@ -189,7 +198,7 @@ var Comment = {
 
                 $(Comment.SELECTORS.comment_parent + `[alt=${comment_id}]`).append(html);
 
-                $(Comment.SELECTORS.reply_form + `[alt=${comment_id}]`).html("");
+                $(Comment.SELECTORS.reply_form + `[alt=${comment_id}]`).remove();
 
                 Comment.deleteComment();
                 Comment.likeComment();
@@ -220,9 +229,7 @@ var Comment = {
             $.ajax({
                 type: 'POST',
                 url: 'likecomment/' + comment_id,
-                data: {
-                    id_blog: window.blog_id
-                }
+                data: {},
             })
 
             .done(function(response) {
@@ -260,12 +267,12 @@ var Comment = {
                 })
 
                 .done(function(response){
-                    alert("done !");
                     let html = "";
                     console.log(response);
                     $.each(response, function(index, item) {
-                        $(Comment.SELECTORS.comment_item + `[alt=${item.id}]`).html(html);
+                        $(Comment.SELECTORS.comment_item + `[alt=${item.id}]`).remove();
                     })
+                    alert("done !");
                 })
 
                 .fail(function(xhr, status, errorThrown) {
@@ -276,10 +283,54 @@ var Comment = {
                 })
             }
             else {
-
+                alert("denied !");
             }
         })
     },
+
+    updateComment: function() {
+        $(Comment.SELECTORS.comment_item).on("click", Comment.SELECTORS.update_comment_button, function(e) {
+            e.preventDefault();
+
+            let id_select = $(this).attr('alt');
+
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: 'updatecomment/' + $(this).attr('alt'),
+                data: {
+                    blog_id : window.blog_id,
+                    content: $(Comment.SELECTORS.update_comment).val(),
+                },
+            })
+
+            .done(function(response) {
+                $(Comment.SELECTORS.comment_item + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.comment_text + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.action + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.like + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.reply + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.edit + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.delete + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.reply_form + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.like_count + `[alt=${id_select}]`).attr("alt", response.id)
+                $(Comment.SELECTORS.comment_text + `[alt=${response.id}]`).text(response.content)
+                $(Comment.SELECTORS.reply_form + `[alt=${response.id}]`).remove();
+            })
+
+            .fail(function(xhr, status, errorThrown) {
+                alert( "Sorry, there was a problem!" );
+                console.log( "Error: " + errorThrown );
+                console.log( "Status: " + status );
+                console.dir( xhr );
+            })
+        })
+    }
 };
 
 $(document).ready(function () {
