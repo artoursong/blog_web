@@ -50,9 +50,11 @@ var Comment = {
         })
 
         .done(function(response) {
-            response.forEach(function(item, index) {
-                $(Comment.SELECTORS.like + `[alt=${item.id_object}]`).addClass("liked");
-            })
+            if (response != "") {
+                response.forEach(function(item, index) {
+                    $(Comment.SELECTORS.like + `[alt=${item.id_object}]`).addClass("liked");
+                })
+            }
         })
 
         .fail(function(xhr, status, errorThrown) {
@@ -240,10 +242,9 @@ var Comment = {
             })
 
             .fail(function(xhr, status, errorThrown) {
-                alert( "Sorry, there was a problem!" );
-                console.log( "Error: " + errorThrown );
-                console.log( "Status: " + status );
-                console.dir( xhr );
+                if(errorThrown == 'Unauthorized') { 
+                    window.location.href = "http://127.0.0.1:8000/login";
+                }
             })
         })
     },

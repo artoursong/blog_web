@@ -29,7 +29,7 @@
                             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
                             <div class="d-flex justify-content-center mb-2">
                                 <a type="button" class="btn btn-primary" href="{{ URL::route('get_edit_profile', Auth::user()->id) }}">Edit Profile</a>
-                                <button type="button" class="btn btn-outline-primary ms-1">Change Pass</button>
+                                <a type="button" class="btn btn-outline-primary ms-1" href="{{URL::route('get_update_pass', Auth::user()->id)}}">Change Pass</a>
                             </div>
                         </div>
                     </div>

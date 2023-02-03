@@ -3,49 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Blog;
 use App\Http\Services\BlogService;
-use Illuminate\Support\Facades\View;
+
 
 class BlogController extends Controller
 {
+    protected BlogService $blogservice;
+
+    public function __construct()
+    {
+        $this->blogservice = new BlogService();
+    }
+    
     public function getCreateForm() {
-        $blogservice = new BlogService();
-        return $blogservice->getCreateForm();
+        return $this->blogservice->getCreateForm();
     }
 
     public function createBlog($id, Request $request) {
-        $blogservice = new BlogService();
-        return $blogservice->createBlog($id, $request);
+        return $this->blogservice->createBlog($id, $request);
     }
 
     public function getBlog($slug) {
-        $blogservice = new BlogService();
-        return $blogservice->getBlog($slug);
+        return $this->blogservice->getBlog($slug);
     }
 
     public function getNewBlogs() {
-        $blogservice = new BlogService();
-        return $blogservice->getNewBlogs();
+        return $this->blogservice->getNewBlogs();
     }
     
     public function getBlogsOfUser($id) {
-        $blogservice = new BlogService();
-        return $blogservice->getBlogsOfUser($id);
+        return $this->blogservice->getBlogsOfUser($id);
     }
 
     public function editBlog($id, $slug) {
-        $blogservice = new BlogService();
-        return $blogservice->editBlog($id, $slug);
+        return $this->blogservice->editBlog($id, $slug);
     }
 
     public function updateBlog($id, $id_blog, Request $request) {
-        $blogservice = new BlogService();
-        return $blogservice->updateBlog($id, $id_blog, $request);
+        return $this->blogservice->updateBlog($id, $id_blog, $request);
     }
 
     public function deleteBlog($id, $id_blog) {
-        $blogservice = new BlogService();
-        return $blogservice->deleteBlog($id, $id_blog);
+        return $this->blogservice->deleteBlog($id, $id_blog);
     }
 }

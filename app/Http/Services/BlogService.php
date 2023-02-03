@@ -3,12 +3,10 @@
 namespace App\Http\Services;
 
 use Illuminate\Http\Request;
-use App\Models\Like;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Cateofpost;
 use App\Http\Services\CommentService;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 
 class BlogService extends ConvertSlug
@@ -132,12 +130,13 @@ class BlogService extends ConvertSlug
         $slug = $request->title ." " .date("h:i:s", time()) ." " .strval(rand(0, 10000));
         $slug = $this->convert_name($slug);
 
-        Blog::where('id', $id_blog)->update(['title' => $request->title, 
-                                            'content' => $request->content,
-                                            'slug' => $slug,
-                                            'image_url' => $imageName,
-                                            'subtitle' => $request->subtitle
-                                            ]);
+        Blog::where('id', $id_blog)->update([
+            'title' => $request->title, 
+            'content' => $request->content,
+            'slug' => $slug,
+            'image_url' => $imageName,
+            'subtitle' => $request->subtitle
+        ]);
 
         Cateofpost::where('blog_id', $id_blog)->delete();
 

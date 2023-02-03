@@ -15,7 +15,15 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">{{ __('Change Password') }}</div>
-
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                                </ul>
+                            </div>
+                            @endif
                             <form action="{{route('update_pass', Auth::user()->id)}}" method="POST">
                                 @csrf
                                 <div class="card-body">

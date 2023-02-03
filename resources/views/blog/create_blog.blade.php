@@ -12,6 +12,15 @@
     <section>
         <div class="container py-5">
             <div class="col-lg-8 content-container">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+                </ul>
+            </div>
+            @endif
                 <form action="{{route('createBlog', Auth::user()->id)}}" method="post" enctype="multipart/form-data" class="update-form">
                     @csrf
                     <div class="info-content">

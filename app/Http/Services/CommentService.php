@@ -27,14 +27,7 @@ class CommentService
         ]);
         $comment->save();
 
-        $numlength = strlen((string)$comment->id);
-
-        $comment_parent = '';
-
-        if($numlength == 1) $comment_parent = '000'. (string)$comment->id;
-        if($numlength == 2) $comment_parent = '00'. (string)$comment->id;
-        if($numlength == 3) $comment_parent = '0'. (string)$comment->id;
-        if($numlength == 4) $comment_parent = (string)$comment->id;
+        $comment_parent = str_pad((string)$comment->id,4,"0",STR_PAD_LEFT);
 
         Comment::where('id', $comment->id)->update(['comments_parents' => $comment_parent]);
         
@@ -69,14 +62,7 @@ class CommentService
 
         $reply->save();
 
-        $numlength = strlen((string)$reply->id);
-
-        $comment_parent = '';
-
-        if($numlength == 1) $comment_parent = '000'. (string)$reply->id;
-        if($numlength == 2) $comment_parent = '00'. (string)$reply->id;
-        if($numlength == 3) $comment_parent = '0'. (string)$reply->id;
-        if($numlength == 4) $comment_parent = (string)$reply->id;
+        $comment_parent = str_pad((string)$reply->id,4,"0",STR_PAD_LEFT);
 
         $parent = $comment->comments_parents . "." . $comment_parent;
         

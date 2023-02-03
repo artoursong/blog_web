@@ -8,7 +8,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckCurrentUser;
-use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +20,7 @@ use App\Models\Comment;
 |
 */
 
-Route::get('/', [BlogController::class, 'getNewBlogs'])->name('get_new_blogs');
-
+/*User Route*/
 
 Route::get('/user', [UserController::class, 'index'])->name('get_info_user')->middleware(Authenticate::class);
 
@@ -34,7 +32,9 @@ Route::post('/user/{id}', [UserController::class,'update'])->name('update_info_u
 
 Route::post('/user/updatepass/{id}', [UserController::class,'updatePass'])->middleware(CheckCurrentUser::class)->name('update_pass');
 
-Route::get('/user/updatepass/{id}', [UserController::class, 'getPassPage'])->middleware(CheckCurrentUser::class)->name('get_update_pass');
+Route::get('/user/updatepass/{id}', function() {
+    return view('user.change_pass');
+})->middleware(CheckCurrentUser::class)->name('get_update_pass');;
 
 Route::get('/login',function() {
     session(['url.intended' => url()->previous()]);
@@ -51,9 +51,11 @@ Route::post('/login', [UserController::class, 'login'])->name('log_in');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('log_out');
 
-
+/*END User Route*/
 
 /*Blog Route*/
+
+Route::get('/', [BlogController::class, 'getNewBlogs'])->name('get_new_blogs');
 
 Route::get('/blog/create', [BlogController::class, 'getCreateForm'])->middleware(Authenticate::class)->name('getCreateForm');
 
@@ -68,23 +70,12 @@ Route::get('/blog/edit_blog/{id}/{slug}', [BlogController::class, 'editBLog'])->
 Route::post('/blog/update/{id}/{id_blog}', [BlogController::class, 'updateBlog'])->middleware(checkCurrentUser::class)->name('updateBlog');
 
 Route::get('/blog/delete/{id}/{id_blog}', [BlogController::class, 'deleteBlog'])->middleware(checkCurrentUser::class)->name('deleteBlog');
+
 /*Blog Route End*/
 
 /*CKFinder Route*/
-
-## /routes/web.php
-// Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
-//     ->name('ckfinder_connector');
-
-// Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
-//     ->name('ckfinder_browser');
-
 	
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->name('upload');
-
-
-//Route::any('/ckfinder/examples/{example?}', '\CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
-//    ->name('ckfinder_examples');
 
 /*END CKFinder Route*/
 

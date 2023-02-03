@@ -3,53 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Http\Services\UserService;
 use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
-    public function sign_up(Request $request) {
-        $user_service = new UserService();
-        return $user_service->register($request);
+    protected UserService $userservice;
+
+    public function __construct()
+    {
+        $this->userservice = new UserService();
     }
 
-    public function login(Request $request) {
-        $user_service = new UserService();
-        return $user_service->login($request);
+    public function sign_up(Request $request) {
+        return $this->userservice->register($request);
+    }
+
+    public function login(Request $request) {;
+        return $this->userservice->login($request);
     }
 
     public function logout(Request $request) {
-        $user_service = new UserService();
-        return $user_service->logout($request);
+        return $this->userservice->logout($request);
     }
 
     public function index() {
-        $user_service = new UserService();
-        return $user_service->index();
+        return $this->userservice->index();
     }
 
     public function update($id, Request $request) {
-        $user_service = new UserService();
-        return $user_service->update($id, $request);
+        return $this->userservice->update($id, $request);
     }
 
     public function showProfile($id) {
-        $user_service = new UserService();
-        return $user_service->showProfile($id);
+        return $this->userservice->showProfile($id);
     }
 
     public function showEditProfile($id) {
-        $user_service = new UserService();
-        return $user_service->showEditProfile($id);
+        return $this->userservice->showEditProfile($id);
     }
 
     public function updatePass($id, Request $request) {
-        $user_service = new UserService();
-        return $user_service->updatePass($id, $request);
+        return $this->userservice->updatePass($id, $request);
     }
 
-    public function getPassPage($id) {
+    public function getPassPage() {
         $view = View::make('user.change_pass');
         return $view;
     }

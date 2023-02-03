@@ -22,7 +22,7 @@ class CheckCurrentUser
             if ($user_id == $request->segment(3)) {
                 return $next($request);
             }
-            return response()->view('login.login');
+            return response()->view('no_permission');
         }
         return response()->view('login.login');
     }

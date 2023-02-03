@@ -44,7 +44,7 @@
                                 <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-brand btn-block mb-4 bg-primary text-white" value="Sign In">
                             </div>
                         </form>
-                        <p class="small text-center text-gray-soft">Don't have an account yet? <a href="https://themes.getbootstrap.com/my-account/">Sign up</a></p>
+                        <p class="small text-center text-gray-soft">Don't have an account yet? <a href="{{route('get.sign_up')}}">Sign up</a></p>
                     </div>
                 </div>
             </div>

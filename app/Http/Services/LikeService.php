@@ -2,21 +2,13 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
-use App\Models\Blog;
 use App\Models\Comment;
-use App\Models\User;
 use App\Models\Like;
-use Illuminate\Routing\Response;
-use Egulias\EmailValidator\Parser\IDLeftPart;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
-use MicrosoftAzure\Storage\Common\Internal\Validate;
 
 class LikeService
 {
-    public function addLike ($id) 
+    public function likeOrUnlike ($id) 
     {
 
         date_default_timezone_set("Asia/Ho_Chi_Minh");

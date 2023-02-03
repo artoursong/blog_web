@@ -7,8 +7,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Http\Services\BlogService;
-use Dotenv\Exception\ValidationException;
 
 class UserService
 {
@@ -35,13 +33,10 @@ class UserService
             return redirect()->route('get.login')->with('success', 'Sign up success pls login');
         }
         else return back()->with('status', 'username is already exists');
-
-        // return back()->with('status', 'please fill all field');
     }
 
     public function login(Request $request) {
         $data = $request->only('email', 'password');
-        // dd(session('url.intended'));
         if(Auth::attempt($data)) {
             if(session('url.intended') === url('/signup')) {
                 return redirect()->route('get_new_blogs');
@@ -79,16 +74,27 @@ class UserService
 
     public function update($id, Request $request) {
         $request->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
-        ]);  
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+            'image' => 'image|mimes:png,jpg,jpeg|max:2048',
+            'email' => 'required',
+            'username' => 'required',
+            'name' => 'required',
+        ]);
 
-        $data = $request->input();
-        if(!is_null($data['email'])) User::where('id', $id)->update(['email' => $data['email']]);
-        if(!is_null($data['username'])) User::where('id', $id)->update(['username' => $data['username']]);
-        if(!is_null($data['name'])) User::where('id', $id)->update(['name' => $data['name']]);
-        if(!is_null($imageName)) User::where('id', $id)->update(['image_url' => $imageName]);
+        $user = User::where('id', $id)->first();
+
+        $imageName = $user->image_url;
+
+        if($request->image != null) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        User::where('id', $id)->update([
+            'email' => $request->email,
+            'username' => $request->username,
+            'name' => $request->name,
+            'image_url' => $imageName
+        ]);
         $user = User::where('id', $id)->first();
         $view = view('user.my_profile')->with('user', $user);;
         return $view;
