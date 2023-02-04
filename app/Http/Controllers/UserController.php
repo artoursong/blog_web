@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\UserService;
-use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
@@ -46,11 +45,4 @@ class UserController extends Controller
     public function updatePass($id, Request $request) {
         return $this->userservice->updatePass($id, $request);
     }
-
-    public function getPassPage() {
-        $view = View::make('user.change_pass');
-        return $view;
-    }
-
-
 }
