@@ -6,6 +6,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckCurrentUser;
 
@@ -44,6 +45,10 @@ Route::get('/login',function() {
 Route::get('/signup', function() {
     return view('sign_up.sign_up');
 })->name('get.sign_up');
+
+Route::get('/resetpasspage', function() {
+    return view('reset_password');
+})->name('get.resetpass');
 
 Route::post('/signup', [UserController::class, 'sign_up'])->name('sign_up');
 
@@ -95,8 +100,18 @@ Route::post('blog/updatecomment/{id}', [CommentController::class, 'updateComment
 
 /*Like route*/
 
-Route::post('blog/likecomment/{id}', [LikeController::class, 'addLike'])->middleware(Authenticate::class)->name('addLike');
+Route::post('blog/likecomment/{id}', [LikeController::class, 'likeOrUnlike'])->middleware(Authenticate::class)->name('addLike');
 
 Route::get('blog/checklike/{id}', [LikeController::class, 'checkLike'])->name('checkLike');
 
 /*END LIKE ROUTE*/
+
+/*Reset Password*/
+
+Route::post('forget_password', [PasswordResetController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+
+Route::get('reset-password/{token}', [PasswordResetController::class, 'showResetPasswordForm'])->name('reset.password.get');
+
+Route::post('reset-password', [PasswordResetController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+/*End Reset Password*/

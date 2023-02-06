@@ -45,4 +45,5 @@ class UserController extends Controller
     public function updatePass($id, Request $request) {
         return $this->userservice->updatePass($id, $request);
     }
+
 }

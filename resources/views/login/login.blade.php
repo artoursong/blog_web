@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label for="user_pass">Password</label>
 
-                                <a class="form-sublink" href="https://themes.getbootstrap.com/my-account/lost-password/">Forgot password?</a>
+                                <a class="form-sublink" href="{{route('get.resetpass')}}">Forgot password?</a>
                                 <input type="password" name="password" id="user_pass" class="form-control" value="" size="20">
                             </div>
 

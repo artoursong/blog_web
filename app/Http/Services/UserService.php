@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Password;
 
 class UserService
 {
@@ -118,5 +119,4 @@ class UserService
 
         return back()->with("status", "Password change successfully!");
     }
-
 }
