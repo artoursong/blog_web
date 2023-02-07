@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    @include('layout.header')
     <h1>Forget Password Email</h1>
    
     You can reset password from bellow link:

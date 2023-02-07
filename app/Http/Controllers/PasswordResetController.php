@@ -22,7 +22,7 @@ class PasswordResetController extends Controller
     }
 
     public function submitResetPasswordForm(Request $request) {
-        return $this->passwordresetservice->submitForgetPasswordForm($request);
+        return $this->passwordresetservice->submitResetPasswordForm($request);
     }
   
 }
