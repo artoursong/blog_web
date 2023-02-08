@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Cateofpost;
 use App\Http\Services\CommentService;
 use Illuminate\Support\Facades\View;
@@ -162,6 +163,7 @@ class BlogService extends ConvertSlug
             return $this->getBlogsOfUser($id, 'blog is not exists');
         }
         else {
+            Comment::where('blog_id', $id_blog)->delete();
             Cateofpost::where('blog_id', $id_blog)->delete();
             Blog::where('id', $id_blog)->delete();
             return $this->getBlogsOfUser($id, 'blog is deleted!');
